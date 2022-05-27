@@ -1,0 +1,167 @@
+@charset "UTF-8";
+header, section, footer, aside, nav, article, figure {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 14px sans-serif, console, 'Hiragino Sans GB', '宋体', 'WenQuanYi Micro Hei', SimSun;
+}
+
+body, ul, ol, dl, dd, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, button, textarea, p, th, td, li {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+ul, ol, menu {
+    list-style: none;
+}
+
+fieldset, img {
+    border: none;
+}
+
+img, select, input, textarea, button {
+    vertical-align: middle;
+}
+
+caption, th {
+    text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6, input, textarea, select, caption, em, i, b, strong, th {
+    font-size: 100%;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f2f2f2;
+}
+
+.w {
+    margin: 0 auto;
+    width: 1100px;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    line-height: 0;
+}
+
+/*用于空标签清除浮动*/
+.clear-e {
+    display: block;
+    clear: both;
+}
+
+/*兼容ie*/
+.clearfix, .clear-e {
+    zoom: 1;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+}
+
+input {
+    padding-left: 5px;
+}
+
+.green {
+    color: green;
+}
+
+.totop {
+    display: inline-block;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: red;
+    text-align: center;
+}
+
+.totop:hover img {
+    display: none;
+}
+
+a.totop:hover:before {
+    content: "回到顶部";
+    font-weight: 700;
+    font-size: 15px;
+    font-family: '微软雅黑', serif;
+    color: #fff;
+}
+
+/*分页样式*/
+.bottom-page {
+    text-align: right;
+}
+
+.bottom-page a {
+    display: inline-block;
+    min-width: 20px;
+    height: 20px;
+    color: #43b8c2;
+    text-align: center;
+    line-height: 20px;
+    background: #fff;
+    border: 1px solid;
+    vertical-align: middle;
+    margin: 10px 0;
+    font-size: 12px;
+}
+
+.bottom-page .active {
+    background-color: rgba(246, 0, 0, 0.5);
+    color: #fff;
+}
+
+.bottom-page .active {
+    cursor: default;
+}
+
+.bottom-page a img {
+    width: 20px;
+    height: 20px;
+}
+
+.bottom-page .no-act:hover {
+    background-color: #fbebca;
+    color: #fff;
+}
+
+.split {
+    width: 100%;
+    height: 10px;
+    background: #f2f2f2;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
