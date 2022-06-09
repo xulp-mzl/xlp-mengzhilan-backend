@@ -54,6 +54,11 @@
             <artifactId>xlp-scanner</artifactId>
             <version>${xlp.jar.versionNo}</version>
         </dependency>
+        <dependency>
+            <groupId>com.mengzhilan</groupId>
+            <artifactId>xlp-mvc</artifactId>
+            <version>${xlp.jar.versionNo}</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
