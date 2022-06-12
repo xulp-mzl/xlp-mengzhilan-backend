@@ -13,13 +13,13 @@ import java.io.Serializable;
  *
  * 基本实体抽象类，主要提供两个必须属性
  */
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntityIdAuto implements Serializable {
    private static final long serialVersionUID = -5746897510175841125L;
 
    @FieldName
-   @XLPId(type = PrimaryKeyType.UUID, columnName = "id", dataType = DataType.VARCHAR,
-        length = 64, isNull = false, descriptor = "主键，唯一标识")
-   private String id;
+   @XLPId(type = PrimaryKeyType.AUTO, columnName = "id", dataType = DataType.BIGINT,
+        isNull = false, descriptor = "主键，唯一标识")
+   private Long id;
 
     @FieldName
     @XLPColumn(columnName = "classId", dataType = DataType.VARCHAR,
@@ -31,7 +31,7 @@ public abstract class BaseEntity implements Serializable {
      *
      * @return
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -40,7 +40,7 @@ public abstract class BaseEntity implements Serializable {
      *
      * @param id
      */
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

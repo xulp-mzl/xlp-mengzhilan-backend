@@ -52,9 +52,8 @@ public class MenuOptionController {
         }
         try {
             MenuItem menuItem = JsonObject.fromJsonString(data).toBean(MenuItem.class);
-            if (XLPStringUtil.isEmpty(menuItem.getTitle())
-                || XLPStringUtil.isEmpty(menuItem.getPath())){
-                return ResponseResult.error(StatusCode.MUST_DATA_LOSE, "名称或路由不能为空！");
+            if (XLPStringUtil.isEmpty(menuItem.getTitle())){
+                return ResponseResult.error(StatusCode.MUST_DATA_LOSE, "名称不能为空！");
             }
             boolean success = menuItemService.saveMenuItem(menuItem);
             if(success){
@@ -80,9 +79,8 @@ public class MenuOptionController {
         }
         try {
             MenuItem menuItem = JsonObject.fromJsonString(data).toBean(MenuItem.class);
-            if (XLPStringUtil.isEmpty(menuItem.getTitle())
-                    || XLPStringUtil.isEmpty(menuItem.getPath())){
-                return ResponseResult.error(StatusCode.MUST_DATA_LOSE, "名称或路由不能为空！");
+            if (XLPStringUtil.isEmpty(menuItem.getTitle())){
+                return ResponseResult.error(StatusCode.MUST_DATA_LOSE, "名称不能为空！");
             }
             boolean success = menuItemService.updateMenuItem(menuItem);
             if(success){

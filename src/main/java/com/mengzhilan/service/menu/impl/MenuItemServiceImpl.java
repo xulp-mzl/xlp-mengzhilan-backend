@@ -70,13 +70,14 @@ public class MenuItemServiceImpl extends BaseService implements MenuItemService 
      */
     @Override
     public boolean saveMenuItem(MenuItem menuItem) {
+        if (XLPStringUtil.isEmpty(menuItem.getPath())){
+            // 假如没设置path为name值
+            menuItem.setPath("（自动设置）" + menuItem.getTitle());
+        }
         boolean hasExists = menuItemDao.verifyPathAndTitle(menuItem);
         if (hasExists) return false;
         if (XLPStringUtil.isEmpty(menuItem.getParentId())){
             menuItem.setParentId(MenuItem.DEFAULT_PARENT_ID);
-        }
-        if (XLPStringUtil.isEmpty(menuItem.getId())){
-            menuItem.setId(XLPStringUtil.uuidL());
         }
         menuItem.setCreateTime(new Date());
         menuItem.setUpdateTime(menuItem.getCreateTime());
@@ -92,6 +93,10 @@ public class MenuItemServiceImpl extends BaseService implements MenuItemService 
      */
     @Override
     public boolean updateMenuItem(MenuItem menuItem) {
+        if (XLPStringUtil.isEmpty(menuItem.getPath())){
+            // 假如没设置path为name值
+            menuItem.setPath("（自动设置）" + menuItem.getTitle());
+        }
         boolean hasExists = menuItemDao.verifyPathAndTitle(menuItem);
         if (hasExists) return false;
         menuItemDao.updateMenuItem(menuItem);
