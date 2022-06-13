@@ -1,0 +1,54 @@
+package com.mengzhilan.helper;
+
+import com.mengzhilan.service.menu.MenuItemService;
+import com.mengzhilan.service.model.ModelService;
+import com.mengzhilan.util.BeanCreator;
+import org.xlp.mv.IBaseService;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * Create by xlp on 2022/6/13
+ *
+ * 获取各个service工具类
+ */
+public class CommonServiceHelper {
+    /**
+     * 缓冲池，缓存各个service
+     */
+    private static final Map<String, IBaseService> SERVICE_MAP = new ConcurrentHashMap<>();
+
+    /**
+     * 获取菜单操作服务
+     *
+     * @return
+     */
+    public static MenuItemService getMenuItemService(){
+        return (MenuItemService) getIBaseService("menuItemService");
+    }
+
+    /**
+     * 获取服务
+     *
+     * @param serviceId 服务id， 在beanMapper.properties配置文件中的key
+     * @return
+     */
+    public static IBaseService getIBaseService(String serviceId){
+        IBaseService iBaseService = SERVICE_MAP.get(serviceId);
+        if (iBaseService == null){
+            iBaseService = BeanCreator.getBean(serviceId);
+            SERVICE_MAP.put(serviceId, iBaseService);
+        }
+        return iBaseService;
+    }
+
+    /**
+     * 获取模型操作服务
+     *
+     * @return
+     */
+    public static ModelService getModelService(){
+        return (ModelService) getIBaseService("modelServiceImpl");
+    }
+}

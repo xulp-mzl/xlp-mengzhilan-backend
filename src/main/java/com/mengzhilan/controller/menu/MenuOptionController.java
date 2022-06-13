@@ -1,12 +1,13 @@
 package com.mengzhilan.controller.menu;
 
 import com.mengzhilan.annotation.*;
+import com.mengzhilan.constant.MessageConst;
 import com.mengzhilan.entity.menu.MenuItem;
 import com.mengzhilan.enumeration.RequestMethodType;
+import com.mengzhilan.helper.CommonServiceHelper;
 import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.response.StatusCode;
 import com.mengzhilan.service.menu.MenuItemService;
-import com.mengzhilan.util.BeanCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xlp.json.JsonObject;
@@ -22,7 +23,7 @@ import org.xlp.utils.XLPStringUtil;
 public class MenuOptionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MenuOptionController.class);
 
-    private MenuItemService menuItemService = BeanCreator.getBean("menuItemService");
+    private MenuItemService menuItemService = CommonServiceHelper.getMenuItemService();
 
     /**
      * 获树结构菜单信息
@@ -35,7 +36,7 @@ public class MenuOptionController {
             return ResponseResult.success(menuItemService.getTreeMenuItems());
         } catch (Exception e) {
             LOGGER.error("获树结构菜单信息失败：", e);
-            return ResponseResult.error(e.getMessage());
+            return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
         }
     }
 
@@ -62,7 +63,7 @@ public class MenuOptionController {
             return ResponseResult.error(StatusCode.HAS_EXISTS, "已存在名称或路由相同的菜单条目，操作失败！");
         }  catch (Exception e){
             LOGGER.error("保存菜单信息失败：", e);
-            return ResponseResult.error("后台服务异常，请稍后重试！");
+            return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
         }
     }
 
@@ -89,7 +90,7 @@ public class MenuOptionController {
             return ResponseResult.error(StatusCode.HAS_EXISTS, "已存在名称或路由相同的菜单条目，操作失败！");
         }  catch (Exception e){
             LOGGER.error("更新菜单信息失败：", e);
-            return ResponseResult.error("后台服务异常，请稍后重试！");
+            return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
         }
     }
 
@@ -110,7 +111,7 @@ public class MenuOptionController {
             return ResponseResult.success();
         } catch (Exception e) {
             LOGGER.error("获树结构菜单信息失败：", e);
-            return ResponseResult.error(e.getMessage());
+            return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
         }
     }
 }

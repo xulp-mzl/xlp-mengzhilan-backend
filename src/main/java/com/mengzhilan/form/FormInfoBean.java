@@ -31,6 +31,13 @@ public class FormInfoBean {
     private String beanId;
 
     /**
+     * 排序号
+     */
+    @FieldName
+    private int orderNo;
+
+
+    /**
      * form 字段信息
      */
     @FieldName
@@ -81,12 +88,21 @@ public class FormInfoBean {
         this.beanId = beanId;
     }
 
+    public int getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(int orderNo) {
+        this.orderNo = orderNo;
+    }
+
     @Override
     public String toString() {
         return "FormInfoBean{" +
                 "sourceBeanClass=" + sourceBeanClass +
                 ", beanName='" + beanName + '\'' +
                 ", beanId='" + beanId + '\'' +
+                ", orderNo=" + orderNo +
                 ", formFieldInfos=" + formFieldInfos +
                 '}';
     }

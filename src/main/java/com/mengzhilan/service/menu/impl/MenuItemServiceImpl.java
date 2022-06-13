@@ -1,11 +1,11 @@
 package com.mengzhilan.service.menu.impl;
 
+import com.mengzhilan.base.service.ApplicationBaseServiceAbstract;
 import com.mengzhilan.dao.menu.MenuItemDao;
 import com.mengzhilan.entity.menu.MenuItem;
 import com.mengzhilan.service.menu.MenuItemService;
 import com.mengzhilan.util.BeanCreator;
 import org.xlp.db.sql.CountSQL;
-import org.xlp.mv.BaseService;
 import org.xlp.utils.XLPStringUtil;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Create by xlp on 2022/5/2
  */
-public class MenuItemServiceImpl extends BaseService implements MenuItemService {
+public class MenuItemServiceImpl extends ApplicationBaseServiceAbstract implements MenuItemService {
     private MenuItemDao menuItemDao = BeanCreator.getSourceBean("menuItemDao");
 
     /**
@@ -99,6 +99,7 @@ public class MenuItemServiceImpl extends BaseService implements MenuItemService 
         }
         boolean hasExists = menuItemDao.verifyPathAndTitle(menuItem);
         if (hasExists) return false;
+        menuItem.setUpdateTime(new Date());
         menuItemDao.updateMenuItem(menuItem);
         return true;
     }

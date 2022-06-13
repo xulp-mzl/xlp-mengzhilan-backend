@@ -2,11 +2,12 @@ package com.mengzhilan.dao.menu.impl;
 
 import com.mengzhilan.dao.menu.MenuItemDao;
 import com.mengzhilan.entity.menu.MenuItem;
-import org.xlp.db.sql.*;
+import org.xlp.db.sql.CountSQL;
+import org.xlp.db.sql.QuerySQL;
+import org.xlp.db.sql.UpdateSQL;
 import org.xlp.mv.BaseDao;
 import org.xlp.utils.XLPStringUtil;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +34,6 @@ public class MenuItemDaoImpl extends BaseDao implements MenuItemDao {
      */
     @Override
     public boolean updateMenuItem(MenuItem menuItem) {
-        menuItem.setUpdateTime(new Date());
         UpdateSQL<MenuItem> updateSQL = new UpdateSQL<>(menuItem);
         updateSQL.clearUpdate()
                 .set("updateTime", menuItem.getUpdateTime())

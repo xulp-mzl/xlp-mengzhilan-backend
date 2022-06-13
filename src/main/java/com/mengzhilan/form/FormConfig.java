@@ -1,7 +1,10 @@
 package com.mengzhilan.form;
 
+import com.mengzhilan.entity.model.ModelInfo;
 import com.mengzhilan.enumeration.FormFieldType;
 import com.mengzhilan.form.annotation.LoadBeanForm;
+import com.mengzhilan.helper.CommonServiceHelper;
+import com.mengzhilan.service.model.ModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xlp.db.tableoption.annotation.XLPColumn;
@@ -16,10 +19,7 @@ import org.xlp.utils.XLPDateUtil;
 import org.xlp.utils.XLPStringUtil;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Create by xlp on 2022/6/9
@@ -44,6 +44,8 @@ public class FormConfig {
      * 存储bean form 信息
      */
     private final static List<FormInfoBean> FORM_INFO_BEANS = new LinkedList<>();
+
+    private final static ModelService MODEL_SERVICE = CommonServiceHelper.getModelService();
 
     static {
         reload();
@@ -92,6 +94,33 @@ public class FormConfig {
 
         // 解析成form信息
         parseToFormInfoBeans();
+
+        // 从数据库中读取最新信息
+        updateFormInfoBeans();
+
+        // 排序
+        orderFormInfoBeans();
+    }
+
+    private static void orderFormInfoBeans() {
+       FORM_INFO_BEANS.sort((o1, o2) -> {
+           int orderNo1 = o1.getOrderNo();
+           int orderNo2 = o2.getOrderNo();
+           return Integer.compare(orderNo1, orderNo2);
+        });
+    }
+
+    private static void updateFormInfoBeans() {
+        List<ModelInfo> modelInfos = MODEL_SERVICE.list(ModelInfo.class);
+        for (ModelInfo modelInfo : modelInfos) {
+            for (FormInfoBean formInfoBean : FORM_INFO_BEANS) {
+                if (formInfoBean.getBeanId().equals(modelInfo.getModelId())){
+                    formInfoBean.setBeanName(modelInfo.getModelName());
+                    formInfoBean.setOrderNo(modelInfo.getWeight());
+                    break;
+                }
+            }
+        }
     }
 
     private static void parseToFormInfoBeans() {

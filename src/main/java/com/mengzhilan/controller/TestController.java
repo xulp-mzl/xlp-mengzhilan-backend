@@ -1,7 +1,7 @@
 package com.mengzhilan.controller;
 
 import com.mengzhilan.annotation.*;
-import com.mengzhilan.entity.menu.MenuItem;
+import com.mengzhilan.entity.model.ModelInfo;
 import com.mengzhilan.enumeration.RequestMethodType;
 import org.xlp.db.ddl.MYSqlTableCreator;
 import org.xlp.db.ddl.TableCreator;
@@ -49,10 +49,10 @@ public class TestController {
     }
 
     @ResponseCharset("utf-8")
-    @RequestMapping(value = "createTable", method = RequestMethodType.GET)
+    @RequestMapping(value = "/createTable", method = RequestMethodType.GET)
     public String createTable(HttpServletResponse response) throws IOException, SQLException {
        TableCreator tableCreator = new MYSqlTableCreator(XLPDBUtil.getConnection());
-       tableCreator.createTableByEntityClass(MenuItem.class);
+       tableCreator.createTableByEntityClass(ModelInfo.class);
        return "表创建成功";
     }
 }

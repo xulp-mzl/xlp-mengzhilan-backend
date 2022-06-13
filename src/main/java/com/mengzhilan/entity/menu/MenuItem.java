@@ -28,7 +28,6 @@ public class MenuItem extends MZBaseEntity {
     public static final String DEFAULT_PARENT_ID = null;
 
     @FieldName
-    @XLPIndex(indexType = IndexType.UNIQUE)
     @XLPColumn(columnName = "path", dataType = DataType.VARCHAR,
             length = 1000, descriptor = "菜单路由地址", maxLength = 1000)
     private String path;
