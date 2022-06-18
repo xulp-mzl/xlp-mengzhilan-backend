@@ -34,11 +34,13 @@ public class ModelController {
         try {
             List<FormInfoBean> formInfoBeans = FormConfig.getFormInfoBeans();
             List<Map<String, Object>> result = new ArrayList<>();
-            Map<String, Object> item = new HashMap<>();
+            Map<String, Object> item;
             for (FormInfoBean formInfoBean : formInfoBeans) {
+                item = new HashMap<>();
                 item.put("beanId", formInfoBean.getBeanId());
                 item.put("beanName", formInfoBean.getBeanName());
-                //item.put("")
+                item.put("orderNo", formInfoBean.getOrderNo());
+                result.add(item);
             }
             return ResponseResult.success(result);
         } catch (Exception e) {

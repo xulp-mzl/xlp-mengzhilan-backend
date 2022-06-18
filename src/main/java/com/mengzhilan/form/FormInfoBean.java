@@ -36,6 +36,7 @@ public class FormInfoBean {
     @FieldName
     private int orderNo;
 
+    private boolean hidden;
 
     /**
      * form 字段信息
@@ -96,6 +97,14 @@ public class FormInfoBean {
         this.orderNo = orderNo;
     }
 
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
     @Override
     public String toString() {
         return "FormInfoBean{" +
@@ -103,6 +112,7 @@ public class FormInfoBean {
                 ", beanName='" + beanName + '\'' +
                 ", beanId='" + beanId + '\'' +
                 ", orderNo=" + orderNo +
+                ", hidden=" + hidden +
                 ", formFieldInfos=" + formFieldInfos +
                 '}';
     }

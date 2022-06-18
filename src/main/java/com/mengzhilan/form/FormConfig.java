@@ -117,6 +117,7 @@ public class FormConfig {
                 if (formInfoBean.getBeanId().equals(modelInfo.getModelId())){
                     formInfoBean.setBeanName(modelInfo.getModelName());
                     formInfoBean.setOrderNo(modelInfo.getWeight());
+                    formInfoBean.setHidden(modelInfo.isDisabled());
                     break;
                 }
             }
