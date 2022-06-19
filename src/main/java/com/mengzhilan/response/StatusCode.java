@@ -26,6 +26,11 @@ public enum StatusCode {
     MUST_DATA_LOSE(406),
 
     /**
+     *  请求参数缺失
+     */
+    REQUEST_PARAMETER_LOSE(407),
+
+    /**
      * 服务异常
      */
     SERVER_ERROR(500),

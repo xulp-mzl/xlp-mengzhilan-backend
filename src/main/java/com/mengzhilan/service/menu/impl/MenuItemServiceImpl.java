@@ -3,8 +3,8 @@ package com.mengzhilan.service.menu.impl;
 import com.mengzhilan.base.service.ApplicationBaseServiceAbstract;
 import com.mengzhilan.dao.menu.MenuItemDao;
 import com.mengzhilan.entity.menu.MenuItem;
+import com.mengzhilan.helper.DaoHelper;
 import com.mengzhilan.service.menu.MenuItemService;
-import com.mengzhilan.util.BeanCreator;
 import org.xlp.db.sql.CountSQL;
 import org.xlp.utils.XLPStringUtil;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * Create by xlp on 2022/5/2
  */
 public class MenuItemServiceImpl extends ApplicationBaseServiceAbstract implements MenuItemService {
-    private MenuItemDao menuItemDao = BeanCreator.getSourceBean("menuItemDao");
+    private MenuItemDao menuItemDao = DaoHelper.getMenuItemDao();
 
     /**
      * 获取所有的菜单条目对象
