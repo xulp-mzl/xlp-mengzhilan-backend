@@ -1,6 +1,7 @@
 package com.mengzhilan.helper;
 
 import com.mengzhilan.dao.menu.MenuItemDao;
+import com.mengzhilan.dao.model.ModelDao;
 import com.mengzhilan.util.BeanCreator;
 import org.xlp.mv.IBaseDao;
 
@@ -18,12 +19,21 @@ public class DaoHelper {
     private static final Map<String, IBaseDao> DAO_MAP = new ConcurrentHashMap<>();
 
     /**
-     * 获取菜单操DAO
+     * 获取菜单操作DAO
      *
      * @return
      */
     public static MenuItemDao getMenuItemDao(){
         return (MenuItemDao) getIBaseDao("menuItemDao");
+    }
+
+    /**
+     * 获取模型操作DAO
+     *
+     * @return
+     */
+    public static ModelDao getModelDao(){
+        return (ModelDao) getIBaseDao("modelDao");
     }
 
     /**

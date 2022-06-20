@@ -186,4 +186,17 @@ public class FormConfig {
     public static List<FormInfoBean> getFormInfoBeans(){
         return FORM_INFO_BEANS;
     }
+
+    /**
+     * 通过beanId 获取FormInfoBean对象
+     *
+     * @param beanId
+     * @return
+     */
+    public static FormInfoBean findFormInfoBean(String beanId){
+        for (FormInfoBean infoBean : FORM_INFO_BEANS) {
+            if (infoBean.getBeanId().equals(beanId)) return infoBean;
+        }
+        return null;
+    }
 }

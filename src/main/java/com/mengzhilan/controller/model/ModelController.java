@@ -1,9 +1,6 @@
 package com.mengzhilan.controller.model;
 
-import com.mengzhilan.annotation.Controller;
-import com.mengzhilan.annotation.RequestMapping;
-import com.mengzhilan.annotation.RequestParam;
-import com.mengzhilan.annotation.ResponseCharset;
+import com.mengzhilan.annotation.*;
 import com.mengzhilan.constant.MessageConst;
 import com.mengzhilan.enumeration.RequestMethodType;
 import com.mengzhilan.form.FormConfig;
@@ -63,12 +60,14 @@ public class ModelController {
      */
     @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.PUT)
-    public ResponseResult hideModels(@RequestParam("modelIds") String modelIds){
+    public ResponseResult hideModels(@RequestParam String modelIds){
+        System.out.println(modelIds);
         try {
            if (XLPStringUtil.isEmpty(modelIds)){
                return ResponseResult.error(StatusCode.REQUEST_PARAMETER_LOSE, "请选择要操作的数据！");
            }
            String[] modelIdArr = modelIds.split(",");
+           modelService.hideModelByModelIds(modelIdArr);
            return ResponseResult.success();
         } catch (Exception e) {
             LOGGER.error("设置模型信息失败：", e);
