@@ -42,7 +42,13 @@ public enum StatusCode {
     /**
      * 有子菜单
      */
-    HAS_CHILDREN_MENU(601)
+    HAS_CHILDREN_MENU(601),
+
+    /**
+     * 对象名称不能为空
+     */
+    NAME_IS_NOT_EMPTY(602)
+
 
     ;
     /**

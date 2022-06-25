@@ -11,6 +11,7 @@ import com.mengzhilan.response.StatusCode;
 import com.mengzhilan.service.model.ModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xlp.json.JsonObject;
 import org.xlp.utils.XLPStringUtil;
 
 import java.util.ArrayList;
@@ -61,7 +62,6 @@ public class ModelController {
     @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.PUT)
     public ResponseResult hideModels(@RequestParam String modelIds){
-        System.out.println(modelIds);
         try {
            if (XLPStringUtil.isEmpty(modelIds)){
                return ResponseResult.error(StatusCode.REQUEST_PARAMETER_LOSE, "请选择要操作的数据！");
@@ -69,6 +69,30 @@ public class ModelController {
            String[] modelIdArr = modelIds.split(",");
            modelService.hideModelByModelIds(modelIdArr);
            return ResponseResult.success();
+        } catch (Exception e) {
+            LOGGER.error("设置模型信息失败：", e);
+            return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
+        }
+    }
+
+    /**
+     * 隐藏不需要操作的模型
+     * @return
+     */
+    @ResponseCharset("utf-8")
+    @RequestMapping(method = RequestMethodType.POST)
+    public ResponseResult updateModel(@RequestBody String body){
+        System.out.println(body);
+        if (XLPStringUtil.isEmpty(body)){
+            return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "请求修改的模型数据缺失！");
+        }
+        try {
+            FormInfoBean formInfoBean = JsonObject.fromJsonString(body).toBean(FormInfoBean.class);
+            if (XLPStringUtil.isEmpty(formInfoBean.getBeanName())){
+                return ResponseResult.error(StatusCode.NAME_IS_NOT_EMPTY, "模型名称不能为空！");
+            }
+            modelService.updateModelByFormInfoBean(formInfoBean);
+            return ResponseResult.success();
         } catch (Exception e) {
             LOGGER.error("设置模型信息失败：", e);
             return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);

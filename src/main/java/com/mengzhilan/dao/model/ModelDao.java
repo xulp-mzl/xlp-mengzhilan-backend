@@ -1,6 +1,7 @@
 package com.mengzhilan.dao.model;
 
 import com.mengzhilan.entity.model.ModelInfo;
+import com.mengzhilan.form.FormInfoBean;
 import org.xlp.mv.IBaseDao;
 
 import java.util.List;
@@ -18,4 +19,11 @@ public interface ModelDao extends IBaseDao {
      * 根据模型id查询相应模型
      */
     List<ModelInfo> findModelByModelIds(String[] modelIds);
+
+    /**
+     * 修改模型信息
+     *
+     * @param formInfoBean
+     */
+    void updateModelByFormInfoBean(FormInfoBean formInfoBean);
 }

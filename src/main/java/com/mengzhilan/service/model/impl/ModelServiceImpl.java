@@ -61,4 +61,20 @@ public class ModelServiceImpl extends ApplicationBaseServiceAbstract implements 
             if (formInfoBean != null) formInfoBean.setHidden(true);
         }
     }
+
+    /**
+     * 修改模型信息
+     *
+     * @param formInfoBean
+     */
+    @Override
+    public void updateModelByFormInfoBean(FormInfoBean formInfoBean) {
+        modelDao.updateModelByFormInfoBean(formInfoBean);
+        FormInfoBean infoBean = FormConfig.findFormInfoBean(formInfoBean.getBeanId());
+        if (infoBean != null){
+            // 更新缓存中的数据
+            infoBean.setBeanName(formInfoBean.getBeanName());
+            infoBean.setOrderNo(formInfoBean.getOrderNo());
+        }
+    }
 }
