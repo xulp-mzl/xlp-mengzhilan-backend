@@ -97,9 +97,6 @@ public class FormConfig {
 
         // 从数据库中读取最新信息
         updateFormInfoBeans();
-
-        // 排序
-        orderFormInfoBeans();
     }
 
     private static void orderFormInfoBeans() {
@@ -184,6 +181,8 @@ public class FormConfig {
      * @return
      */
     public static List<FormInfoBean> getFormInfoBeans(){
+        // 排序
+        orderFormInfoBeans();
         return FORM_INFO_BEANS;
     }
 
