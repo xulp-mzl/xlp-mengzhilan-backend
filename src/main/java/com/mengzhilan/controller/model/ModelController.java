@@ -82,7 +82,6 @@ public class ModelController {
     @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.POST)
     public ResponseResult updateModel(@RequestBody String body){
-        System.out.println(body);
         if (XLPStringUtil.isEmpty(body)){
             return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "请求修改的模型数据缺失！");
         }

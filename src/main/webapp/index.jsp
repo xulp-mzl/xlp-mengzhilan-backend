@@ -19,9 +19,10 @@
                     <div style="height:110%;">1</div>
                 </div>
                 <div class="body-right">
-                    23
+                    <textarea></textarea>
                     <div style="width:110%;">1</div>
                 </div>
+
             </div>
         </div>
 
