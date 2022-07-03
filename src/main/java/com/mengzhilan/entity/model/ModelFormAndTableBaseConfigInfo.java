@@ -37,17 +37,23 @@ public class ModelFormAndTableBaseConfigInfo extends MZBaseEntity {
      * 表格中首列类型
      */
     @FieldName
-    @XLPColumn(columnName="first_column_type", dataType = DataType.VARCHAR, length = 10,
-            descriptor = " 表格中首列类型，可取值为【index, selection, ''】")
+    @XLPColumn(dataType = DataType.VARCHAR, length = 10,
+            descriptor = "表格中首列类型，可取值为【index, selection, ''】")
     private Boolean firstColumnType = false;
 
     /**
      * 表单宽度
      */
     @FieldName
-    @XLPColumn(columnName="form_width", dataType = DataType.VARCHAR, length = 20,
-            descriptor = " 表单宽度")
+    @XLPColumn(dataType = DataType.VARCHAR, length = 20, descriptor = "表单宽度")
     private String formWidth;
+
+    /**
+     * 表单项描述宽度
+     */
+    @FieldName
+    @XLPColumn(dataType = DataType.VARCHAR, length = 20, descriptor = "表单宽度")
+    private String formItemLabelWidth;
 
     /**
      * 表单是否全屏显示
@@ -111,6 +117,14 @@ public class ModelFormAndTableBaseConfigInfo extends MZBaseEntity {
         this.splitColumnCount = splitColumnCount;
     }
 
+    public String getFormItemLabelWidth() {
+        return formItemLabelWidth;
+    }
+
+    public void setFormItemLabelWidth(String formItemLabelWidth) {
+        this.formItemLabelWidth = formItemLabelWidth;
+    }
+
     @Override
     public String toString() {
         return "ModelFormAndTableBaseConfigInfo{" +
@@ -118,6 +132,7 @@ public class ModelFormAndTableBaseConfigInfo extends MZBaseEntity {
                 ", filterable=" + filterable +
                 ", firstColumnType=" + firstColumnType +
                 ", formWidth='" + formWidth + '\'' +
+                ", formItemLabelWidth='" + formItemLabelWidth + '\'' +
                 ", fullscreen=" + fullscreen +
                 ", splitColumnCount=" + splitColumnCount +
                 "} " + super.toString();
