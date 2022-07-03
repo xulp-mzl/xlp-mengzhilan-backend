@@ -1,11 +1,11 @@
 package com.mengzhilan.dao.model.impl;
 
-import com.mengzhilan.base.service.ApplicationBaseServiceAbstract;
 import com.mengzhilan.dao.model.ModelDao;
 import com.mengzhilan.entity.model.ModelInfo;
 import com.mengzhilan.form.FormInfoBean;
 import org.xlp.db.sql.QuerySQL;
 import org.xlp.db.sql.UpdateSQL;
+import org.xlp.mv.BaseDao;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Create by xlp on 2022/6/19
  */
-public class ModelDaoImpl extends ApplicationBaseServiceAbstract implements ModelDao {
+public class ModelDaoImpl extends BaseDao implements ModelDao {
     /**
      * 隐藏不需要操作的模型
      *
