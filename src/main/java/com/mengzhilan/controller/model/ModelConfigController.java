@@ -1,16 +1,14 @@
 package com.mengzhilan.controller.model;
 
-import com.mengzhilan.annotation.Controller;
-import com.mengzhilan.annotation.RequestBody;
-import com.mengzhilan.annotation.RequestMapping;
-import com.mengzhilan.annotation.ResponseCharset;
+import com.mengzhilan.annotation.*;
 import com.mengzhilan.constant.MessageConst;
+import com.mengzhilan.entity.model.ModelFormAndTableBaseConfigInfo;
 import com.mengzhilan.enumeration.RequestMethodType;
-import com.mengzhilan.form.FormInfoBean;
 import com.mengzhilan.helper.CommonServiceHelper;
 import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.response.StatusCode;
-import com.mengzhilan.service.model.ModelService;
+import com.mengzhilan.service.model.ModelConfigService;
+import com.mengzhilan.util.ModelBaseConfigReaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xlp.json.JsonObject;
@@ -24,27 +22,41 @@ import org.xlp.utils.XLPStringUtil;
 public class ModelConfigController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ModelConfigController.class);
 
-    private ModelService modelService = CommonServiceHelper.getModelService();
+    private ModelConfigService service = CommonServiceHelper.getModelConfigService();
 
     /**
-     * 隐藏不需要操作的模型
+     * 配置模型基本信息
      * @return
      */
     @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.POST)
-    public ResponseResult updateModel(@RequestBody String body){
+    public ResponseResult saveBaseConfig(@RequestBody String body){
         if (XLPStringUtil.isEmpty(body)){
-            return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "请求修改的模型数据缺失！");
+            return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "请求修改的模型基本数据缺失！");
         }
         try {
-            FormInfoBean formInfoBean = JsonObject.fromJsonString(body).toBean(FormInfoBean.class);
-            if (XLPStringUtil.isEmpty(formInfoBean.getBeanName())){
-                return ResponseResult.error(StatusCode.NAME_IS_NOT_EMPTY, "模型名称不能为空！");
-            }
-            modelService.updateModelByFormInfoBean(formInfoBean);
+            ModelFormAndTableBaseConfigInfo configInfo = JsonObject.fromJsonString(body)
+                    .toBean(ModelFormAndTableBaseConfigInfo.class);
+            service.saveConfig(configInfo);
             return ResponseResult.success();
         } catch (Exception e) {
-            LOGGER.error("设置模型信息失败：", e);
+            LOGGER.error("模型基本信息配置失败：", e);
+            return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
+        }
+    }
+
+    /**
+     * 获取模型配置基本信息
+     * @return
+     */
+    @ResponseCharset("utf-8")
+    @RequestMapping(method = RequestMethodType.GET)
+    public ResponseResult getBaseConfig(@RequestParam("modelId") String modelId){
+        try {
+            ModelFormAndTableBaseConfigInfo configInfo = ModelBaseConfigReaderUtils.getBaseConfigInfoFromCache(modelId);
+            return ResponseResult.success(configInfo);
+        } catch (Exception e) {
+            LOGGER.error("获取模型基本信息配置失败：", e);
             return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
         }
     }

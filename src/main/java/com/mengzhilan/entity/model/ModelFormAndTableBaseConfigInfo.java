@@ -1,6 +1,7 @@
 package com.mengzhilan.entity.model;
 
 import com.mengzhilan.base.MZBaseEntity;
+import com.mengzhilan.enumeration.table.FirstColumnType;
 import org.xlp.db.ddl.annotation.XLPIndex;
 import org.xlp.db.tableoption.annotation.XLPColumn;
 import org.xlp.db.tableoption.annotation.XLPEntity;
@@ -39,7 +40,7 @@ public class ModelFormAndTableBaseConfigInfo extends MZBaseEntity {
     @FieldName
     @XLPColumn(dataType = DataType.VARCHAR, length = 10,
             descriptor = "表格中首列类型，可取值为【index, selection, ''】")
-    private Boolean firstColumnType = false;
+    private FirstColumnType firstColumnType = FirstColumnType.none;
 
     /**
      * 表单宽度
@@ -85,11 +86,11 @@ public class ModelFormAndTableBaseConfigInfo extends MZBaseEntity {
         this.filterable = filterable;
     }
 
-    public Boolean getFirstColumnType() {
+    public FirstColumnType getFirstColumnType() {
         return firstColumnType;
     }
 
-    public void setFirstColumnType(Boolean firstColumnType) {
+    public void setFirstColumnType(FirstColumnType firstColumnType) {
         this.firstColumnType = firstColumnType;
     }
 
