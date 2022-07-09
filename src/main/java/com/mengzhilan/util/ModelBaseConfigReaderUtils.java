@@ -53,4 +53,11 @@ public class ModelBaseConfigReaderUtils {
             CONFIG_INFO_MAP.remove(modelId);
         }
     }
+
+    /**
+     * 清除缓存
+     */
+    public static void clearCache(){
+        CONFIG_INFO_MAP.clear();
+    }
 }

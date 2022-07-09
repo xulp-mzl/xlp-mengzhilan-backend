@@ -10,3 +10,7 @@ com.mengzhilan.util.BeanCreator.reload();
 ```
 com.mengzhilan.form.FormConfig.reload();
 ```
+#可清除缓存类
+```
+com.mengzhilan.util.ModelBaseConfigReaderUtils.clearCache();
+```
