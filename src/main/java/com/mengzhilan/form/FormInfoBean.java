@@ -1,5 +1,6 @@
 package com.mengzhilan.form;
 
+import com.mengzhilan.base.ExtendedAttr;
 import org.xlp.javabean.annotation.Bean;
 import org.xlp.javabean.annotation.FieldName;
 
@@ -36,7 +37,16 @@ public class FormInfoBean {
     @FieldName
     private int orderNo;
 
+    /**
+     * 是否不显示
+     */
+    @FieldName
     private boolean hidden;
+
+    /**
+     * 表示该form对应的模型是否可扩展字段
+     */
+    private boolean canExtend;
 
     /**
      * form 字段信息
@@ -50,6 +60,9 @@ public class FormInfoBean {
 
     public void setSourceBeanClass(Class<?> sourceBeanClass) {
         this.sourceBeanClass = sourceBeanClass;
+        if (sourceBeanClass != null) {
+            this.canExtend = ExtendedAttr.class.isAssignableFrom(sourceBeanClass);
+        }
     }
 
     public String getBeanName() {
@@ -105,6 +118,10 @@ public class FormInfoBean {
         this.hidden = hidden;
     }
 
+    public boolean isCanExtend() {
+        return canExtend;
+    }
+
     @Override
     public String toString() {
         return "FormInfoBean{" +
@@ -113,6 +130,7 @@ public class FormInfoBean {
                 ", beanId='" + beanId + '\'' +
                 ", orderNo=" + orderNo +
                 ", hidden=" + hidden +
+                ", canExtend=" + canExtend +
                 ", formFieldInfos=" + formFieldInfos +
                 '}';
     }
