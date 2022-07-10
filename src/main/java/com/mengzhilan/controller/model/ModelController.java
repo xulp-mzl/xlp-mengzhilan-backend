@@ -45,6 +45,7 @@ public class ModelController {
                 item.put("beanId", formInfoBean.getBeanId());
                 item.put("beanName", formInfoBean.getBeanName());
                 item.put("orderNo", formInfoBean.getOrderNo());
+                item.put("canExtend", formInfoBean.isCanExtend());
                 if (formInfoBean.isHidden()) continue;
                 result.add(item);
             }

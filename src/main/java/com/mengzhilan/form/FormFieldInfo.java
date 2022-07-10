@@ -20,14 +20,20 @@ public class FormFieldInfo {
     /**
      * form 字段标识
      */
-    @FieldName
+    @FieldName(name = "attrId", mark = "属性标识")
     private String formFieldId;
 
     /**
      * form 字段名称
      */
-    @FieldName
+    @FieldName(name = "attrName", mark = "属性名称")
     private String formFieldName;
+
+    /**
+     * 排序号
+     */
+    @FieldName
+    private int orderNo = 0;
 
     public FormFieldInfo(){}
 
@@ -61,12 +67,21 @@ public class FormFieldInfo {
         this.formFieldName = formFieldName;
     }
 
+    public int getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(int orderNo) {
+        this.orderNo = orderNo;
+    }
+
     @Override
     public String toString() {
         return "FormFieldInfo{" +
                 "formFieldType=" + formFieldType +
                 ", formFieldId='" + formFieldId + '\'' +
                 ", formFieldName='" + formFieldName + '\'' +
+                ", orderNo=" + orderNo +
                 '}';
     }
 }
