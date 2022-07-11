@@ -1,6 +1,7 @@
 package com.mengzhilan.helper;
 
 import com.mengzhilan.service.menu.MenuItemService;
+import com.mengzhilan.service.model.ModelAttributeService;
 import com.mengzhilan.service.model.ModelConfigService;
 import com.mengzhilan.service.model.ModelService;
 import com.mengzhilan.util.BeanCreator;
@@ -60,5 +61,14 @@ public class CommonServiceHelper {
      */
     public static ModelConfigService getModelConfigService(){
         return (ModelConfigService) getIBaseService("modelConfigService");
+    }
+
+    /**
+     * 获取模型属性操作服务
+     *
+     * @return
+     */
+    public static ModelAttributeService getModelAttributeService(){
+        return (ModelAttributeService) getIBaseService("modelAttributeService");
     }
 }
