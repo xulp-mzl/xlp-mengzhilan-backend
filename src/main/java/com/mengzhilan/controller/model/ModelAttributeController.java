@@ -50,7 +50,7 @@ public class ModelAttributeController {
         } catch (BusinessException e) {
             return ResponseResult.error(e.getMessage());
         } catch (Exception e) {
-            LOGGER.error("获取模型信息失败：", e);
+            LOGGER.error("获取模型属性信息失败：", e);
             return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
         }
     }
