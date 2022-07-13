@@ -1,10 +1,13 @@
 package com.mengzhilan.service.model.impl;
 
 import com.mengzhilan.base.service.ApplicationBaseServiceAbstract;
+import com.mengzhilan.dao.model.ModelAttributeDao;
+import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
 import com.mengzhilan.exception.BusinessException;
 import com.mengzhilan.form.FormConfig;
 import com.mengzhilan.form.FormFieldInfo;
 import com.mengzhilan.form.FormInfoBean;
+import com.mengzhilan.helper.DaoHelper;
 import com.mengzhilan.service.model.ModelAttributeService;
 
 import java.util.List;
@@ -14,6 +17,8 @@ import java.util.List;
  */
 public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
         implements ModelAttributeService {
+    private ModelAttributeDao modelAttributeDao = DaoHelper.getModelAttributeDao();
+
     /**
      * 根据模型id获取模型属性集合
      *
@@ -35,5 +40,16 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
             return Integer.compare(orderNo1, orderNo2);
         });
         return formFieldInfos;
+    }
+
+    /**
+     * 根据模型id获取模型表单属性集合
+     *
+     * @param modelId
+     * @return
+     */
+    @Override
+    public List<ModelFormDetailConfig> getModelFormDetailConfigByModelId(String modelId) {
+        return modelAttributeDao.getByModelId(modelId);
     }
 }

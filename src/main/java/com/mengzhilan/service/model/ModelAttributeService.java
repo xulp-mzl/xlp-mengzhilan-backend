@@ -1,5 +1,6 @@
 package com.mengzhilan.service.model;
 
+import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
 import com.mengzhilan.exception.BusinessException;
 import com.mengzhilan.form.FormFieldInfo;
 import org.xlp.mv.IBaseService;
@@ -20,4 +21,12 @@ public interface ModelAttributeService extends IBaseService {
      * @throws BusinessException
      */
     List<FormFieldInfo> geFormFieldInfosByModelId(String modelId) throws BusinessException;
+
+    /**
+     * 根据模型id获取模型表单属性集合
+     *
+     * @param modelId
+     * @return
+     */
+    List<ModelFormDetailConfig> getModelFormDetailConfigByModelId(String modelId);
 }

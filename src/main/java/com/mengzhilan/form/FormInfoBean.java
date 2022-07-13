@@ -46,12 +46,18 @@ public class FormInfoBean {
     /**
      * 表示该form对应的模型是否可扩展字段
      */
+    @FieldName
     private boolean canExtend;
+
+    /**
+     * 模型对应的表名称
+     */
+    @FieldName
+    private String tableName;
 
     /**
      * form 字段信息
      */
-    @FieldName
     private List<FormFieldInfo> formFieldInfos = new LinkedList<>();
 
     public Class<?> getSourceBeanClass() {
@@ -122,6 +128,14 @@ public class FormInfoBean {
         return canExtend;
     }
 
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
     @Override
     public String toString() {
         return "FormInfoBean{" +
@@ -131,6 +145,7 @@ public class FormInfoBean {
                 ", orderNo=" + orderNo +
                 ", hidden=" + hidden +
                 ", canExtend=" + canExtend +
+                ", tableName='" + tableName + '\'' +
                 ", formFieldInfos=" + formFieldInfos +
                 '}';
     }

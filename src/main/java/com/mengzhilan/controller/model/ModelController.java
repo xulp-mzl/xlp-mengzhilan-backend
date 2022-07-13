@@ -14,10 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.xlp.json.JsonObject;
 import org.xlp.utils.XLPStringUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Create by xlp on 2022/6/13
@@ -38,17 +36,8 @@ public class ModelController {
     public ResponseResult getAllModels(){
         try {
             List<FormInfoBean> formInfoBeans = FormConfig.getFormInfoBeans();
-            List<Map<String, Object>> result = new ArrayList<>();
-            Map<String, Object> item;
-            for (FormInfoBean formInfoBean : formInfoBeans) {
-                item = new HashMap<>();
-                item.put("beanId", formInfoBean.getBeanId());
-                item.put("beanName", formInfoBean.getBeanName());
-                item.put("orderNo", formInfoBean.getOrderNo());
-                item.put("canExtend", formInfoBean.isCanExtend());
-                if (formInfoBean.isHidden()) continue;
-                result.add(item);
-            }
+            List<FormInfoBean> result = formInfoBeans.stream()
+                    .filter((item) -> !item.isHidden()).collect(Collectors.toList());
             return ResponseResult.success(result);
         } catch (Exception e) {
             LOGGER.error("获取模型信息失败：", e);

@@ -1,6 +1,7 @@
 package com.mengzhilan.helper;
 
 import com.mengzhilan.dao.menu.MenuItemDao;
+import com.mengzhilan.dao.model.ModelAttributeDao;
 import com.mengzhilan.dao.model.ModelConfigDao;
 import com.mengzhilan.dao.model.ModelDao;
 import com.mengzhilan.util.BeanCreator;
@@ -44,6 +45,15 @@ public class DaoHelper {
      */
     public static ModelConfigDao getModelConfigDao(){
         return (ModelConfigDao) getIBaseDao("modelConfigDao");
+    }
+
+    /**
+     * 获取模型属性操作DAO
+     *
+     * @return
+     */
+    public static ModelAttributeDao getModelAttributeDao(){
+        return (ModelAttributeDao) getIBaseDao("modelAttribute");
     }
 
     /**

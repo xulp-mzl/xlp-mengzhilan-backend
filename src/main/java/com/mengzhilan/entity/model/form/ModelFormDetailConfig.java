@@ -3,6 +3,7 @@ package com.mengzhilan.entity.model.form;
 import com.mengzhilan.base.MZBaseEntity;
 import com.mengzhilan.enumeration.FormInputType;
 import com.mengzhilan.enumeration.ValueFromType;
+import com.mengzhilan.enumeration.attribute.AttributeType;
 import org.xlp.db.ddl.annotation.XLPIndex;
 import org.xlp.db.tableoption.annotation.XLPColumn;
 import org.xlp.db.tableoption.annotation.XLPEntity;
@@ -138,6 +139,20 @@ public class ModelFormDetailConfig extends MZBaseEntity {
     @FieldName
     @XLPColumn(dataType = DataType.VARCHAR, length = 100, descriptor = "值来源")
     private ValueFromType valueFromType;
+
+    /**
+     * 属性类型
+     */
+    @FieldName
+    @XLPColumn(dataType = DataType.VARCHAR, length = 20, descriptor = "属性类型")
+    private AttributeType attributeType;
+
+    /**
+     * 是否可删除该字段
+     */
+    @FieldName
+    @XLPColumn(dataType = DataType.BOOLEAN, descriptor = "是否可删除该字段，true：可删除，false：不可删除")
+    private Boolean canDelete = false;
 
     public String getModelId() {
         return modelId;
@@ -275,6 +290,22 @@ public class ModelFormDetailConfig extends MZBaseEntity {
         this.valueFromType = valueFromType;
     }
 
+    public AttributeType getAttributeType() {
+        return attributeType;
+    }
+
+    public void setAttributeType(AttributeType attributeType) {
+        this.attributeType = attributeType;
+    }
+
+    public Boolean getCanDelete() {
+        return canDelete;
+    }
+
+    public void setCanDelete(Boolean canDelete) {
+        this.canDelete = canDelete;
+    }
+
     @Override
     public String toString() {
         return "ModelFormDetailConfig{" +
@@ -295,6 +326,8 @@ public class ModelFormDetailConfig extends MZBaseEntity {
                 ", defaultValue='" + defaultValue + '\'' +
                 ", valueFrom='" + valueFrom + '\'' +
                 ", valueFromType=" + valueFromType +
+                ", attributeType=" + attributeType +
+                ", canDelete=" + canDelete +
                 "} " + super.toString();
     }
 }

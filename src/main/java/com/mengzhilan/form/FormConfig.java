@@ -1,9 +1,12 @@
 package com.mengzhilan.form;
 
 import com.mengzhilan.entity.model.ModelInfo;
+import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
 import com.mengzhilan.enumeration.FormFieldType;
+import com.mengzhilan.enumeration.attribute.AttributeType;
 import com.mengzhilan.form.annotation.LoadBeanForm;
 import com.mengzhilan.helper.CommonServiceHelper;
+import com.mengzhilan.service.model.ModelAttributeService;
 import com.mengzhilan.service.model.ModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +49,8 @@ public class FormConfig {
     private final static List<FormInfoBean> FORM_INFO_BEANS = new LinkedList<>();
 
     private final static ModelService MODEL_SERVICE = CommonServiceHelper.getModelService();
+
+    private final static ModelAttributeService MODEL_ATTRIBUTE_SERVICE = CommonServiceHelper.getModelAttributeService();
 
     static {
         reload();
@@ -132,14 +137,17 @@ public class FormConfig {
             form.setBeanId(cs.getSimpleName());
             String beanName = entity.descriptor();
             form.setBeanName(XLPStringUtil.isEmpty(beanName) ? cs.getSimpleName() : beanName);
+            form.setTableName(entity.tableName());
             pds = new JavaBeanPropertiesDescriptor<>(cs).getPdsWithAnnotation(XLPColumn.class);
             FormFieldInfo formFieldInfo;
-            String fieldDescription;
+            String fieldDescription, columnName;
             Class<?> fieldClass;
+            XLPColumn xlpColumn;
             for (PropertyDescriptor<?> pd : pds) {
                 formFieldInfo = new FormFieldInfo();
                 formFieldInfo.setFormFieldId(pd.getFieldName());
-                fieldDescription = pd.getFieldAnnotation(XLPColumn.class).descriptor();
+                xlpColumn =  pd.getFieldAnnotation(XLPColumn.class);
+                fieldDescription = xlpColumn.descriptor();
                 formFieldInfo.setFormFieldName(XLPStringUtil.isEmpty(fieldDescription)
                         ? pd.getFieldName() : fieldDescription);
                 fieldClass = pd.getFiledClassType();
@@ -150,10 +158,38 @@ public class FormConfig {
                 } else {
                     formFieldInfo.setFormFieldType(FormFieldType.INPUT);
                 }
+                formFieldInfo.setAttributeType(AttributeType.HARD_ATTR);
+                formFieldInfo.setCanDelete(false);
+                columnName = xlpColumn.columnName();
+                formFieldInfo.setColumnName(XLPStringUtil.isEmpty(columnName) ? pd.getFieldName()
+                        : columnName);
                 form.addFormFieldInfo(formFieldInfo);
             }
             FORM_INFO_BEANS.add(form);
+            updateFormFieldInfoFromDb(form);
         }
+    }
+
+    /**
+     * 用数据中的数据更新该模型属性信息
+     *
+     * @param form
+     */
+    private static void updateFormFieldInfoFromDb(FormInfoBean form) {
+        List<ModelFormDetailConfig> modelFormDetailConfigByModelId =
+                MODEL_ATTRIBUTE_SERVICE.getModelFormDetailConfigByModelId(form.getBeanId());
+
+    }
+
+    /**
+     *
+     *
+     * @param beanId
+     * @param formFieldId
+     * @return
+     */
+    public static FormFieldInfo getFormFieldInfo(String beanId, String formFieldId){
+       return null;
     }
 
     private static void findSuitClasses() {

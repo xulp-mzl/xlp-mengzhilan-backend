@@ -1,8 +1,11 @@
 package com.mengzhilan.form;
 
 import com.mengzhilan.enumeration.FormFieldType;
+import com.mengzhilan.enumeration.attribute.AttributeType;
 import org.xlp.javabean.annotation.Bean;
 import org.xlp.javabean.annotation.FieldName;
+
+import java.io.Serializable;
 
 /**
  * Create by xlp on 2022/6/10
@@ -10,12 +13,14 @@ import org.xlp.javabean.annotation.FieldName;
  * 表单字段信息
  */
 @Bean
-public class FormFieldInfo {
+public class FormFieldInfo implements Serializable {
+    private static final long serialVersionUID = 6580242851536243478L;
+
     /**
      * 字段对应的表单类型
      */
     @FieldName
-    private FormFieldType formFieldType;
+    private FormFieldType formFieldType = FormFieldType.INPUT;
 
     /**
      * form 字段标识
@@ -35,13 +40,23 @@ public class FormFieldInfo {
     @FieldName
     private int orderNo = 0;
 
-    public FormFieldInfo(){}
+    /**
+     * 属性类型
+     */
+    @FieldName
+    private AttributeType attributeType;
 
-    public FormFieldInfo(FormFieldType formFieldType, String formFieldId, String formFieldName) {
-        this.formFieldType = formFieldType;
-        this.formFieldId = formFieldId;
-        this.formFieldName = formFieldName;
-    }
+    /**
+     * 是否可删除该字段
+     */
+    @FieldName
+    private Boolean canDelete = false;
+
+    /**
+     * 对应数据表字段名称
+     */
+    @FieldName
+    private String columnName;
 
     public FormFieldType getFormFieldType() {
         return formFieldType;
@@ -75,6 +90,30 @@ public class FormFieldInfo {
         this.orderNo = orderNo;
     }
 
+    public AttributeType getAttributeType() {
+        return attributeType;
+    }
+
+    public void setAttributeType(AttributeType attributeType) {
+        this.attributeType = attributeType;
+    }
+
+    public Boolean getCanDelete() {
+        return canDelete;
+    }
+
+    public void setCanDelete(Boolean canDelete) {
+        this.canDelete = canDelete;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
     @Override
     public String toString() {
         return "FormFieldInfo{" +
@@ -82,6 +121,9 @@ public class FormFieldInfo {
                 ", formFieldId='" + formFieldId + '\'' +
                 ", formFieldName='" + formFieldName + '\'' +
                 ", orderNo=" + orderNo +
+                ", attributeType=" + attributeType +
+                ", canDelete=" + canDelete +
+                ", columnName='" + columnName + '\'' +
                 '}';
     }
 }
