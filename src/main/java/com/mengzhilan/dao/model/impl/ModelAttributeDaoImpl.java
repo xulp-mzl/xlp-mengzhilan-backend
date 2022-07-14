@@ -20,8 +20,9 @@ public class ModelAttributeDaoImpl extends BaseDao implements ModelAttributeDao 
     @Override
     public List<ModelFormDetailConfig> getByModelId(String modelId) {
         QuerySQL<ModelFormDetailConfig> querySQL = new QuerySQL<>(ModelFormDetailConfig.class);
-        querySQL.clearQuery().queryName("fieldName").queryName("canDelete").queryName("orderNo")
-            .queryName("attributeType").andEq("modelId", modelId);
+        querySQL.clearQuery().queryName("id").queryName("fieldName").queryName("canDelete")
+                .queryName("orderNo").queryName("attributeType").queryName("fieldId")
+                .andEq("modelId", modelId);
         return list(querySQL);
     }
 }

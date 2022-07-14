@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xlp.db.tableoption.annotation.XLPColumn;
 import org.xlp.db.tableoption.annotation.XLPEntity;
+import org.xlp.db.tableoption.annotation.XLPId;
 import org.xlp.javabean.JavaBeanPropertiesDescriptor;
 import org.xlp.javabean.PropertyDescriptor;
 import org.xlp.scanner.pkg.ClassPathPkgScanner;
@@ -138,16 +139,23 @@ public class FormConfig {
             String beanName = entity.descriptor();
             form.setBeanName(XLPStringUtil.isEmpty(beanName) ? cs.getSimpleName() : beanName);
             form.setTableName(entity.tableName());
-            pds = new JavaBeanPropertiesDescriptor<>(cs).getPdsWithAnnotation(XLPColumn.class);
+            pds = new JavaBeanPropertiesDescriptor<>(cs).getPds();
             FormFieldInfo formFieldInfo;
-            String fieldDescription, columnName;
+            String fieldDescription = XLPStringUtil.EMPTY, columnName = XLPStringUtil.EMPTY;
             Class<?> fieldClass;
             XLPColumn xlpColumn;
+            XLPId xlpId;
             for (PropertyDescriptor<?> pd : pds) {
                 formFieldInfo = new FormFieldInfo();
                 formFieldInfo.setFormFieldId(pd.getFieldName());
                 xlpColumn =  pd.getFieldAnnotation(XLPColumn.class);
-                fieldDescription = xlpColumn.descriptor();
+                if (xlpColumn != null){
+                    fieldDescription = xlpColumn.descriptor();
+                    columnName = xlpColumn.columnName();
+                } else if ((xlpId = pd.getFieldAnnotation(XLPId.class)) != null){
+                    fieldDescription = xlpId.descriptor();
+                    columnName = xlpId.columnName();
+                }
                 formFieldInfo.setFormFieldName(XLPStringUtil.isEmpty(fieldDescription)
                         ? pd.getFieldName() : fieldDescription);
                 fieldClass = pd.getFiledClassType();
@@ -160,7 +168,6 @@ public class FormConfig {
                 }
                 formFieldInfo.setAttributeType(AttributeType.HARD_ATTR);
                 formFieldInfo.setCanDelete(false);
-                columnName = xlpColumn.columnName();
                 formFieldInfo.setColumnName(XLPStringUtil.isEmpty(columnName) ? pd.getFieldName()
                         : columnName);
                 form.addFormFieldInfo(formFieldInfo);
@@ -176,20 +183,46 @@ public class FormConfig {
      * @param form
      */
     private static void updateFormFieldInfoFromDb(FormInfoBean form) {
-        List<ModelFormDetailConfig> modelFormDetailConfigByModelId =
+        List<ModelFormDetailConfig> modelFormDetailConfigs =
                 MODEL_ATTRIBUTE_SERVICE.getModelFormDetailConfigByModelId(form.getBeanId());
-
+        modelFormDetailConfigs.forEach((item) -> {
+            FormFieldInfo formFieldInfo = findFormFieldInfo(form, item.getFieldId());
+            if (formFieldInfo != null){
+                formFieldInfo.setFormFieldName(item.getFieldName());
+                formFieldInfo.setCanDelete(item.getCanDelete());
+                formFieldInfo.setOrderNo(item.getOrderNo());
+                formFieldInfo.setAttributeType(item.getAttributeType());
+            }
+        });
     }
 
     /**
-     *
+     * 根据模型id和属性id获取FormFieldInfo对象
      *
      * @param beanId
      * @param formFieldId
      * @return
      */
-    public static FormFieldInfo getFormFieldInfo(String beanId, String formFieldId){
-       return null;
+    public static FormFieldInfo findFormFieldInfo(String beanId, String formFieldId){
+        FormInfoBean formInfoBean = findFormInfoBean(beanId);
+        return findFormFieldInfo(formInfoBean, formFieldId);
+    }
+
+    /**
+     * 根据模型表单对象和属性id获取FormFieldInfo对象
+     *
+     * @param formInfoBean
+     * @param formFieldId
+     * @return
+     */
+    public static FormFieldInfo findFormFieldInfo(FormInfoBean formInfoBean, String formFieldId){
+        if (formInfoBean == null) return null;
+        if (XLPStringUtil.isEmpty(formFieldId)) return null;
+        List<FormFieldInfo> formFieldInfos = formInfoBean.getFormFieldInfos();
+        for (FormFieldInfo formFieldInfo : formFieldInfos) {
+            if (formFieldInfo.getFormFieldId().equals(formFieldId)) return formFieldInfo;
+        }
+        return null;
     }
 
     private static void findSuitClasses() {
