@@ -144,7 +144,7 @@ public class FormConfig {
             String fieldDescription = XLPStringUtil.EMPTY, columnName = XLPStringUtil.EMPTY;
             Class<?> fieldClass;
             XLPColumn xlpColumn;
-            XLPId xlpId;
+            XLPId xlpId = null;
             for (PropertyDescriptor<?> pd : pds) {
                 formFieldInfo = new FormFieldInfo();
                 formFieldInfo.setFormFieldId(pd.getFieldName());
@@ -156,21 +156,23 @@ public class FormConfig {
                     fieldDescription = xlpId.descriptor();
                     columnName = xlpId.columnName();
                 }
-                formFieldInfo.setFormFieldName(XLPStringUtil.isEmpty(fieldDescription)
-                        ? pd.getFieldName() : fieldDescription);
-                fieldClass = pd.getFiledClassType();
-                if (XLPBooleanUtil.isBoolean(fieldClass)){
-                    formFieldInfo.setFormFieldType(FormFieldType.BOOLEAN);
-                } else if (XLPDateUtil.isDate(fieldClass)){
-                    formFieldInfo.setFormFieldType(FormFieldType.DATE);
-                } else {
-                    formFieldInfo.setFormFieldType(FormFieldType.INPUT);
+                if (xlpColumn != null || xlpId != null){
+                    formFieldInfo.setFormFieldName(XLPStringUtil.isEmpty(fieldDescription)
+                            ? pd.getFieldName() : fieldDescription);
+                    fieldClass = pd.getFiledClassType();
+                    if (XLPBooleanUtil.isBoolean(fieldClass)){
+                        formFieldInfo.setFormFieldType(FormFieldType.BOOLEAN);
+                    } else if (XLPDateUtil.isDate(fieldClass)){
+                        formFieldInfo.setFormFieldType(FormFieldType.DATE);
+                    } else {
+                        formFieldInfo.setFormFieldType(FormFieldType.INPUT);
+                    }
+                    formFieldInfo.setAttributeType(AttributeType.HARD_ATTR);
+                    formFieldInfo.setCanDelete(false);
+                    formFieldInfo.setColumnName(XLPStringUtil.isEmpty(columnName) ? pd.getFieldName()
+                            : columnName);
+                    form.addFormFieldInfo(formFieldInfo);
                 }
-                formFieldInfo.setAttributeType(AttributeType.HARD_ATTR);
-                formFieldInfo.setCanDelete(false);
-                formFieldInfo.setColumnName(XLPStringUtil.isEmpty(columnName) ? pd.getFieldName()
-                        : columnName);
-                form.addFormFieldInfo(formFieldInfo);
             }
             FORM_INFO_BEANS.add(form);
             updateFormFieldInfoFromDb(form);
