@@ -1,16 +1,16 @@
 package com.mengzhilan.controller.model;
 
 import com.mengzhilan.annotation.*;
-import com.mengzhilan.constant.MessageConst;
+import com.mengzhilan.aop.ExceptionHandlerImpl;
 import com.mengzhilan.enumeration.RequestMethodType;
+import com.mengzhilan.exception.EnableExceptionHandler;
+import com.mengzhilan.exception.ExceptionHandler;
 import com.mengzhilan.form.FormConfig;
 import com.mengzhilan.form.FormInfoBean;
 import com.mengzhilan.helper.CommonServiceHelper;
 import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.response.StatusCode;
 import com.mengzhilan.service.model.ModelService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xlp.json.JsonObject;
 import org.xlp.utils.XLPStringUtil;
 
@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 /**
  * Create by xlp on 2022/6/13
  */
+@EnableExceptionHandler
+@ExceptionHandler(ExceptionHandlerImpl.class)
 @Controller
 @RequestMapping("/models/")
 public class ModelController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ModelController.class);
-
     private ModelService modelService = CommonServiceHelper.getModelService();
 
     /**
@@ -34,15 +34,10 @@ public class ModelController {
     @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.GET)
     public ResponseResult getAllModels(){
-        try {
-            List<FormInfoBean> formInfoBeans = FormConfig.getFormInfoBeans();
-            List<FormInfoBean> result = formInfoBeans.stream()
-                    .filter((item) -> !item.isHidden()).collect(Collectors.toList());
-            return ResponseResult.success(result);
-        } catch (Exception e) {
-            LOGGER.error("获取模型信息失败：", e);
-            return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
-        }
+        List<FormInfoBean> formInfoBeans = FormConfig.getFormInfoBeans();
+        List<FormInfoBean> result = formInfoBeans.stream()
+                .filter((item) -> !item.isHidden()).collect(Collectors.toList());
+        return ResponseResult.success(result);
     }
 
     /**
@@ -52,17 +47,12 @@ public class ModelController {
     @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.PUT)
     public ResponseResult hideModels(@RequestParam String modelIds){
-        try {
-           if (XLPStringUtil.isEmpty(modelIds)){
-               return ResponseResult.error(StatusCode.REQUEST_PARAMETER_LOSE, "请选择要操作的数据！");
-           }
-           String[] modelIdArr = modelIds.split(",");
-           modelService.hideModelByModelIds(modelIdArr);
-           return ResponseResult.success();
-        } catch (Exception e) {
-            LOGGER.error("设置模型信息失败：", e);
-            return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
+        if (XLPStringUtil.isEmpty(modelIds)){
+            return ResponseResult.error(StatusCode.REQUEST_PARAMETER_LOSE, "请选择要操作的数据！");
         }
+        String[] modelIdArr = modelIds.split(",");
+        modelService.hideModelByModelIds(modelIdArr);
+        return ResponseResult.success();
     }
 
     /**
@@ -75,16 +65,11 @@ public class ModelController {
         if (XLPStringUtil.isEmpty(body)){
             return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "请求修改的模型数据缺失！");
         }
-        try {
-            FormInfoBean formInfoBean = JsonObject.fromJsonString(body).toBean(FormInfoBean.class);
-            if (XLPStringUtil.isEmpty(formInfoBean.getBeanName())){
-                return ResponseResult.error(StatusCode.NAME_IS_NOT_EMPTY, "模型名称不能为空！");
-            }
-            modelService.updateModelByFormInfoBean(formInfoBean);
-            return ResponseResult.success();
-        } catch (Exception e) {
-            LOGGER.error("设置模型信息失败：", e);
-            return ResponseResult.error(MessageConst.SERVER_ERROR_MSG);
+        FormInfoBean formInfoBean = JsonObject.fromJsonString(body).toBean(FormInfoBean.class);
+        if (XLPStringUtil.isEmpty(formInfoBean.getBeanName())){
+            return ResponseResult.error(StatusCode.NAME_IS_NOT_EMPTY, "模型名称不能为空！");
         }
+        modelService.updateModelByFormInfoBean(formInfoBean);
+        return ResponseResult.success();
     }
 }
