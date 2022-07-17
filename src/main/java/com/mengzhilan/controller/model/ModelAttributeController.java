@@ -44,8 +44,7 @@ public class ModelAttributeController {
         if (XLPStringUtil.isEmpty(modelId)) {
             return ResponseResult.error(StatusCode.REQUEST_PARAMETER_LOSE, "缺失参数模型id（modelId）");
         }
-        List<FormFieldInfo> formFieldInfos = null;
-        formFieldInfos = service.geFormFieldInfosByModelId(modelId);
+        List<FormFieldInfo> formFieldInfos = service.geFormFieldInfosByModelId(modelId);
         return ResponseResult.success(formFieldInfos);
     }
 }
