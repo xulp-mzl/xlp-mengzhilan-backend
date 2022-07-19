@@ -14,3 +14,7 @@ com.mengzhilan.form.FormConfig.reload();
 ```
 com.mengzhilan.util.ModelBaseConfigReaderUtils.clearCache();
 ```
+###模型属性读取工具类
+```
+com.mengzhilan.util.ModelAttributeReaderUtils.reload();
+```
