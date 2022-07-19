@@ -20,10 +20,8 @@ public class ModelAttributeReaderUtils {
      */
     private static final Map<String, ModelFormDetailConfig> MODEL_ATTRIBUTE_MAP = new HashMap<>();
 
-    /**
-     * 把所有模型属性加载到缓存中
-     */
     static {
+        //把所有模型属性加载到缓存中
         reload();
     }
 
@@ -76,9 +74,7 @@ public class ModelAttributeReaderUtils {
     public static void reload(){
         MODEL_ATTRIBUTE_MAP.clear();
         List<ModelFormDetailConfig> modelFormDetailConfigs = SERVICE.list(ModelFormDetailConfig.class);
-        modelFormDetailConfigs.forEach((item) -> {
-            MODEL_ATTRIBUTE_MAP.put(getMapKey(item.getModelId(), item.getFieldId()),
-                    item);
-        });
+        modelFormDetailConfigs.forEach((item) -> MODEL_ATTRIBUTE_MAP.put(getMapKey(item.getModelId(), item.getFieldId()),
+                item));
     }
 }

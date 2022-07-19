@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @EnableExceptionHandler
 @ExceptionHandler(ExceptionHandlerImpl.class)
 @Controller
-@RequestMapping("/models/")
+@RequestMapping("/models")
 public class ModelController {
     private ModelService modelService = CommonServiceHelper.getModelService();
 

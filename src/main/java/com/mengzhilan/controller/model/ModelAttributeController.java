@@ -1,9 +1,6 @@
 package com.mengzhilan.controller.model;
 
-import com.mengzhilan.annotation.Controller;
-import com.mengzhilan.annotation.RequestMapping;
-import com.mengzhilan.annotation.RequestParam;
-import com.mengzhilan.annotation.ResponseCharset;
+import com.mengzhilan.annotation.*;
 import com.mengzhilan.aop.ExceptionHandlerImpl;
 import com.mengzhilan.enumeration.RequestMethodType;
 import com.mengzhilan.exception.BusinessException;
@@ -46,5 +43,18 @@ public class ModelAttributeController {
         }
         List<FormFieldInfo> formFieldInfos = service.geFormFieldInfosByModelId(modelId);
         return ResponseResult.success(formFieldInfos);
+    }
+
+    /**
+     * 获取模型表单详细配置
+     * @param modelId
+     * @param attrId
+     * @return
+     */
+    @ResponseCharset("utf-8")
+    @RequestMapping(method = RequestMethodType.GET, value = "/{modelId}/{attrId}")
+    public ResponseResult getModelAttribute(@PathVariable("modelId") String modelId,
+                                            @PathVariable("attrId") String attrId){
+        return ResponseResult.success();
     }
 }

@@ -21,7 +21,7 @@ import org.xlp.utils.XLPStringUtil;
 @EnableExceptionHandler
 @ExceptionHandler(ExceptionHandlerImpl.class)
 @Controller
-@RequestMapping("/menus/")
+@RequestMapping("/menus")
 public class MenuOptionController {
     private MenuItemService menuItemService = CommonServiceHelper.getMenuItemService();
 
@@ -84,7 +84,7 @@ public class MenuOptionController {
      * @return
      */
     @ResponseCharset("utf-8")
-    @RequestMapping(method = RequestMethodType.DELETE, value = "{id}")
+    @RequestMapping(method = RequestMethodType.DELETE, value = "/{id}")
     public ResponseResult deleteMenuItems(@PathVariable("id") String id){
         MenuItem menuItem = new MenuItem();
         menuItem.setId(id);
