@@ -31,14 +31,14 @@ public class ModelFormDetailConfig extends MZBaseEntity {
      * 表单字段id
      */
     @XLPIndex
-    @FieldName
+    @FieldName(name = "attrId")
     @XLPColumn(dataType = DataType.VARCHAR, length = 64, descriptor = "表单字段id")
     private String fieldId;
 
     /**
      * 表单字段名称
      */
-    @FieldName
+    @FieldName(name = "attrName")
     @XLPColumn(dataType = DataType.VARCHAR, length = 100, descriptor = "表单字段名称")
     private String fieldName;
 

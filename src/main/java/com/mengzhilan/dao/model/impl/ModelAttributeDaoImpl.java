@@ -25,4 +25,18 @@ public class ModelAttributeDaoImpl extends BaseDao implements ModelAttributeDao 
                 .andEq("modelId", modelId);
         return list(querySQL);
     }
+
+    /**
+     * 根据模型id和属性id获取模型表单详细配置信息
+     *
+     * @param modelId
+     * @param attrId
+     * @return
+     */
+    @Override
+    public ModelFormDetailConfig getModelFormDetailConfig(String modelId, String attrId) {
+        QuerySQL<ModelFormDetailConfig> querySQL = new QuerySQL<>(ModelFormDetailConfig.class);
+        querySQL.andEq("modelId", modelId).andEq("fieldId", attrId);
+        return find(querySQL);
+    }
 }

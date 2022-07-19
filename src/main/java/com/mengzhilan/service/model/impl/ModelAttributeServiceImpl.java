@@ -52,4 +52,16 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
     public List<ModelFormDetailConfig> getModelFormDetailConfigByModelId(String modelId) {
         return modelAttributeDao.getByModelId(modelId);
     }
+
+    /**
+     * 根据模型id和属性id获取模型表单详细配置信息
+     *
+     * @param modelId
+     * @param attrId
+     * @return
+     */
+    @Override
+    public ModelFormDetailConfig getModelFormDetailConfig(String modelId, String attrId) {
+        return modelAttributeDao.getModelFormDetailConfig(modelId, attrId);
+    }
 }

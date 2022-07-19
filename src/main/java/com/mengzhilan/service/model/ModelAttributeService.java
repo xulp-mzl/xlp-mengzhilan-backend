@@ -29,4 +29,13 @@ public interface ModelAttributeService extends IBaseService {
      * @return
      */
     List<ModelFormDetailConfig> getModelFormDetailConfigByModelId(String modelId);
+
+    /**
+     * 根据模型id和属性id获取模型表单详细配置信息
+     *
+     * @param modelId
+     * @param attrId
+     * @return
+     */
+    ModelFormDetailConfig getModelFormDetailConfig(String modelId, String attrId);
 }
