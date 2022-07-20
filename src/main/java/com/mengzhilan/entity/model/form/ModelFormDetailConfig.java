@@ -61,35 +61,35 @@ public class ModelFormDetailConfig extends MZBaseEntity {
      */
     @FieldName
     @XLPColumn(dataType = DataType.BOOLEAN, descriptor = "编辑时，是否可编辑该字段，true：可编辑，false：不可编辑")
-    private Boolean edit;
+    private Boolean edit = false;
 
     /**
      * 新建时，该字段是否可编辑
      */
     @FieldName
     @XLPColumn(dataType = DataType.BOOLEAN, descriptor = "新建时，该字段是否可编辑，true：可编辑，false：不可编辑")
-    private Boolean adding;
+    private Boolean adding = false;
 
     /**
      * 表单中是否显示该字段
      */
     @FieldName
     @XLPColumn(dataType = DataType.BOOLEAN, descriptor = "新建时，表单中是否显示该字段，true：显示，false：不显示")
-    private Boolean addingShow;
+    private Boolean addingShow = false;
 
     /**
      * 表单中是否显示该字段
      */
     @FieldName
     @XLPColumn(dataType = DataType.BOOLEAN, descriptor = "编辑时，表单中是否显示该字段，true：显示，false：不显示")
-    private Boolean editShow;
+    private Boolean editShow = false;
 
     /**
      * 表单字段提示信息
      */
     @FieldName
     @XLPColumn(dataType = DataType.VARCHAR, length = 100, descriptor = "表单字段提示信息")
-    private String placeholder;
+    private String placeholder = "";
 
     /**
      * 表单中该字段是否必填
@@ -304,6 +304,19 @@ public class ModelFormDetailConfig extends MZBaseEntity {
 
     public void setCanDelete(Boolean canDelete) {
         this.canDelete = canDelete;
+    }
+
+    /**
+     * 创建一个空的模型表单详情对象，用于返回给前端使用
+     *
+     * @return
+     */
+    public static ModelFormDetailConfig of(){
+        ModelFormDetailConfig modelFormDetailConfig = new ModelFormDetailConfig();
+        modelFormDetailConfig.setFieldId("");
+        modelFormDetailConfig.setFieldName("");
+        modelFormDetailConfig.setModelId("");
+        return modelFormDetailConfig;
     }
 
     @Override

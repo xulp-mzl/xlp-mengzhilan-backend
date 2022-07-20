@@ -1,5 +1,6 @@
 package com.mengzhilan.form;
 
+import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
 import com.mengzhilan.enumeration.FormFieldType;
 import com.mengzhilan.enumeration.attribute.AttributeType;
 import org.xlp.javabean.annotation.Bean;
@@ -112,6 +113,24 @@ public class FormFieldInfo implements Serializable {
 
     public void setColumnName(String columnName) {
         this.columnName = columnName;
+    }
+
+    /**
+     * 用模型表单详细信息构造FormFieldInfo对象
+     *
+     * @param modelFormDetailConfig
+     * @return
+     */
+    public static FormFieldInfo of(ModelFormDetailConfig modelFormDetailConfig){
+        if (modelFormDetailConfig == null) return null;
+        FormFieldInfo newFormFieldInfo = new FormFieldInfo();
+        newFormFieldInfo.setFormFieldId(modelFormDetailConfig.getFieldId());
+        newFormFieldInfo.setFormFieldType(FormFieldType.INPUT);
+        newFormFieldInfo.setAttributeType(modelFormDetailConfig.getAttributeType());
+        newFormFieldInfo.setFormFieldName(modelFormDetailConfig.getFieldName());
+        newFormFieldInfo.setCanDelete(modelFormDetailConfig.getCanDelete());
+        newFormFieldInfo.setOrderNo(modelFormDetailConfig.getOrderNo());
+        return newFormFieldInfo;
     }
 
     @Override

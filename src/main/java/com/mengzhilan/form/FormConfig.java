@@ -193,7 +193,8 @@ public class FormConfig {
                 formFieldInfo.setFormFieldName(item.getFieldName());
                 formFieldInfo.setCanDelete(item.getCanDelete());
                 formFieldInfo.setOrderNo(item.getOrderNo());
-                formFieldInfo.setAttributeType(item.getAttributeType());
+            } else {
+                form.addFormFieldInfo(FormFieldInfo.of(item));
             }
         });
     }

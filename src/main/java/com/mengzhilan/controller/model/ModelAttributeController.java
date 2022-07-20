@@ -2,6 +2,7 @@ package com.mengzhilan.controller.model;
 
 import com.mengzhilan.annotation.*;
 import com.mengzhilan.aop.ExceptionHandlerImpl;
+import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
 import com.mengzhilan.enumeration.RequestMethodType;
 import com.mengzhilan.exception.BusinessException;
 import com.mengzhilan.exception.EnableExceptionHandler;
@@ -11,6 +12,7 @@ import com.mengzhilan.helper.CommonServiceHelper;
 import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.response.StatusCode;
 import com.mengzhilan.service.model.ModelAttributeService;
+import com.mengzhilan.util.ModelAttributeReaderUtils;
 import org.xlp.utils.XLPStringUtil;
 
 import java.util.List;
@@ -55,6 +57,12 @@ public class ModelAttributeController {
     @RequestMapping(method = RequestMethodType.GET, value = "/{modelId}/{attrId}")
     public ResponseResult getModelAttribute(@PathVariable("modelId") String modelId,
                                             @PathVariable("attrId") String attrId){
-        return ResponseResult.success();
+        //获取模型表单配置详细信息
+        ModelFormDetailConfig modelFormDetailConfig = ModelAttributeReaderUtils
+                .getModelFormDetailConfig(modelId, attrId);
+        if (modelFormDetailConfig == null){
+            modelFormDetailConfig = ModelFormDetailConfig.of();
+        }
+        return ResponseResult.success(modelFormDetailConfig);
     }
 }
