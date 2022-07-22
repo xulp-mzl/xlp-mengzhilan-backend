@@ -117,7 +117,7 @@ public class ModelFormDetailConfig extends MZBaseEntity {
      */
     @FieldName
     @XLPColumn(dataType = DataType.VARCHAR, length = 100, descriptor = "表单字段自定义类名称")
-    private String itemClassName = "custom-input";
+    private String itemClassName = "";
 
     /**
      * 默认值
@@ -137,7 +137,7 @@ public class ModelFormDetailConfig extends MZBaseEntity {
      * 值来源类型
      */
     @FieldName
-    @XLPColumn(dataType = DataType.VARCHAR, length = 100, descriptor = "值来源")
+    @XLPColumn(dataType = DataType.VARCHAR, length = 100, descriptor = "值来源类型")
     private ValueFromType valueFromType;
 
     /**
@@ -316,6 +316,7 @@ public class ModelFormDetailConfig extends MZBaseEntity {
         modelFormDetailConfig.setFieldId("");
         modelFormDetailConfig.setFieldName("");
         modelFormDetailConfig.setModelId("");
+        modelFormDetailConfig.setId("");
         return modelFormDetailConfig;
     }
 

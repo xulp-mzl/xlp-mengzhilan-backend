@@ -7,7 +7,9 @@ import com.mengzhilan.enumeration.RequestMethodType;
 import com.mengzhilan.exception.BusinessException;
 import com.mengzhilan.exception.EnableExceptionHandler;
 import com.mengzhilan.exception.ExceptionHandler;
+import com.mengzhilan.form.FormConfig;
 import com.mengzhilan.form.FormFieldInfo;
+import com.mengzhilan.form.FormInfoBean;
 import com.mengzhilan.helper.CommonServiceHelper;
 import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.response.StatusCode;
@@ -56,7 +58,12 @@ public class ModelAttributeController {
     @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.GET, value = "/{modelId}/{attrId}")
     public ResponseResult getModelAttribute(@PathVariable("modelId") String modelId,
-                                            @PathVariable("attrId") String attrId){
+                                            @PathVariable("attrId") String attrId)
+            throws BusinessException {
+        FormInfoBean formInfoBean = FormConfig.findFormInfoBean(modelId);
+        if (formInfoBean == null){
+            throw new BusinessException("根据模型id（modelId）查询对应的模型失败!");
+        }
         //获取模型表单配置详细信息
         ModelFormDetailConfig modelFormDetailConfig = ModelAttributeReaderUtils
                 .getModelFormDetailConfig(modelId, attrId);
