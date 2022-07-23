@@ -99,7 +99,7 @@ public class ModelFormDetailConfig extends MZBaseEntity {
     private Boolean required = false;
 
     /**
-     * 文本最大长度（对应textarea输入域生效）
+     * 文本最大长度
      */
     @FieldName
     @XLPColumn(dataType = DataType.INT, descriptor = "文本最大长度")

@@ -1,6 +1,7 @@
 package com.mengzhilan.entity.model;
 
 import com.mengzhilan.base.MZBaseEntity;
+import com.mengzhilan.enumeration.FormItemSizeType;
 import com.mengzhilan.enumeration.table.FirstColumnType;
 import org.xlp.db.ddl.annotation.XLPIndex;
 import org.xlp.db.tableoption.annotation.XLPColumn;
@@ -70,6 +71,13 @@ public class ModelFormAndTableBaseConfigInfo extends MZBaseEntity {
     @XLPColumn(dataType = DataType.INT, descriptor = "表单输入项水平分成列数")
     private Integer splitColumnCount = 1;
 
+    /**
+     * 表单项输入框大小类型
+     */
+    @FieldName
+    @XLPColumn(dataType = DataType.VARCHAR, length = 6, descriptor = "表单项输入框大小类型")
+    private FormItemSizeType formItemSizeType = FormItemSizeType.SMALL;
+
     public String getModelId() {
         return modelId;
     }
@@ -126,6 +134,14 @@ public class ModelFormAndTableBaseConfigInfo extends MZBaseEntity {
         this.formItemLabelWidth = formItemLabelWidth;
     }
 
+    public FormItemSizeType getFormItemSizeType() {
+        return formItemSizeType;
+    }
+
+    public void setFormItemSizeType(FormItemSizeType formItemSizeType) {
+        this.formItemSizeType = formItemSizeType;
+    }
+
     @Override
     public String toString() {
         return "ModelFormAndTableBaseConfigInfo{" +
@@ -136,6 +152,7 @@ public class ModelFormAndTableBaseConfigInfo extends MZBaseEntity {
                 ", formItemLabelWidth='" + formItemLabelWidth + '\'' +
                 ", fullscreen=" + fullscreen +
                 ", splitColumnCount=" + splitColumnCount +
+                ", formItemSizeType=" + formItemSizeType +
                 "} " + super.toString();
     }
 }

@@ -1,5 +1,7 @@
 package com.mengzhilan.enumeration;
 
+import org.xlp.utils.XLPVerifedUtil;
+
 /**
  * Create by xlp on 2022/6/26
  * 表单输入框类型
@@ -26,11 +28,26 @@ public enum  FormInputType {
     /**
      * 邮件地址输入框
      */
-    EMAIL("邮件地址输入框"),
+    EMAIL("邮件地址输入框", XLPVerifedUtil.EMAIL_REGEX),
+
     /**
      * 数字输入框
      */
-    NUMBER("数字输入框"),
+    NUMBER("数字输入框", XLPVerifedUtil.REAL_NUMBER_REGEX),
+    /**
+     * 整数输入框
+     */
+    INTEGER("整数输入框", XLPVerifedUtil.INT_REGEX),
+    /**
+     * 非负整数输入框
+     */
+    UNSIGNED_INTEGER("非负整数输入框", XLPVerifedUtil.UNSIGNED_INT_REGEX),
+
+    /**
+     * 是否选择器
+     */
+    BOOLEAN("是否选择器"),
+
     /**
      * Switch按钮
      */
@@ -89,11 +106,25 @@ public enum  FormInputType {
      */
     private String description;
 
+    /**
+     * 正则验证
+     */
+    private String regex;
+
     FormInputType(String description){
         this.description = description;
     }
 
+    FormInputType(String description, String regex){
+        this.description = description;
+        this.regex = regex;
+    }
+
     public String getDescription(){
         return description;
+    }
+
+    public String getRegex(){
+        return regex;
     }
 }
