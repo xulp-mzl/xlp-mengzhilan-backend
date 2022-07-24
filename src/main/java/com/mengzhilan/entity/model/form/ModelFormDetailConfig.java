@@ -154,6 +154,13 @@ public class ModelFormDetailConfig extends MZBaseEntity {
     @XLPColumn(dataType = DataType.BOOLEAN, descriptor = "是否可删除该字段，true：可删除，false：不可删除")
     private Boolean canDelete = false;
 
+    /**
+     * 属性验证规则
+     */
+    @FieldName
+    @XLPColumn(dataType = DataType.VARCHAR, length = 255, descriptor = "属性验证规则")
+    private String rule;
+
     public String getModelId() {
         return modelId;
     }
@@ -306,6 +313,14 @@ public class ModelFormDetailConfig extends MZBaseEntity {
         this.canDelete = canDelete;
     }
 
+    public String getRule() {
+        return rule;
+    }
+
+    public void setRule(String rule) {
+        this.rule = rule;
+    }
+
     /**
      * 创建一个空的模型表单详情对象，用于返回给前端使用
      *
@@ -342,6 +357,7 @@ public class ModelFormDetailConfig extends MZBaseEntity {
                 ", valueFromType=" + valueFromType +
                 ", attributeType=" + attributeType +
                 ", canDelete=" + canDelete +
+                ", rule='" + rule + '\'' +
                 "} " + super.toString();
     }
 }
