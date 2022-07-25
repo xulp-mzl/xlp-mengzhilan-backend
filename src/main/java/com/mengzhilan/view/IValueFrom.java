@@ -4,6 +4,7 @@ import org.xlp.javabean.annotation.Bean;
 import org.xlp.javabean.annotation.FieldName;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Create by xlp on 2022/7/24
@@ -17,7 +18,7 @@ public interface IValueFrom {
      *
      * @return
      */
-    OptionValue getOptionValue();
+    List<OptionValue> getOptionValue();
 
     /**
      * 可选值类
@@ -29,7 +30,7 @@ public interface IValueFrom {
          * 值
          */
         @FieldName
-        private String value;
+        private Object value;
 
         /**
          * 显示值
@@ -45,16 +46,16 @@ public interface IValueFrom {
 
         public OptionValue(){}
 
-        public OptionValue(String value, String label) {
+        public OptionValue(Object value, String label) {
             this.value = value;
             this.label = label;
         }
 
-        public String getValue() {
+        public Object getValue() {
             return value;
         }
 
-        public void setValue(String value) {
+        public void setValue(Object value) {
             this.value = value;
         }
 
