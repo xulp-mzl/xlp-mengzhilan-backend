@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.xlp.utils.XLPCharsetUtil;
 import org.xlp.utils.io.XLPIOUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -30,8 +31,13 @@ public class PropertiesFileReaderUtils {
         try {
             inputStream = PropertiesFileReaderUtils.class.getClassLoader()
                     .getResourceAsStream(fileName);
+            byte[] bytes = XLPIOUtil.IOToByteArray(inputStream);
+            inputStream = new ByteArrayInputStream(bytes);
+            //获取文件编码
+            String charsetName = XLPCharsetUtil.gainCharsetName(bytes);
+
             //处理中文乱码问题
-            reader = XLPIOUtil.getReader(inputStream, XLPCharsetUtil.UTF8);
+            reader = XLPIOUtil.getReader(inputStream, charsetName);
             if (LOGGER.isDebugEnabled())
                 LOGGER.debug("加载bean映射配置文件开始： 配置文件名为：" + fileName);
             properties.load(reader);
