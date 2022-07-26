@@ -1,8 +1,6 @@
 package com.mengzhilan.view;
 
 import com.mengzhilan.util.PropertiesFileReaderUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -12,8 +10,6 @@ import java.util.Properties;
  * 加载表单选项值来源工具类
  */
 public class FormValueFromUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FormValueFromUtils.class);
-
     private static Properties formValueFromConfig = new Properties();
 
     /**

@@ -9,6 +9,7 @@ import com.mengzhilan.enumeration.RequestMethodType;
 import com.mengzhilan.exception.EnableExceptionHandler;
 import com.mengzhilan.exception.ExceptionHandler;
 import com.mengzhilan.response.ResponseResult;
+import com.mengzhilan.view.FormValueFromUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,5 +44,16 @@ public class SelectionValueController {
             result.add(map);
         }
         return ResponseResult.success(result);
+    }
+
+    /**
+     * 获取表单选项值来源
+     *
+     * @return
+     */
+    @ResponseCharset("utf-8")
+    @RequestMapping(method = RequestMethodType.GET, value = "/formValueFrom")
+    public ResponseResult getFormValueFromSelection(){
+        return ResponseResult.success(FormValueFromUtils.getFormValueFromConfig());
     }
 }
