@@ -2,10 +2,12 @@ package com.mengzhilan.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xlp.utils.XLPCharsetUtil;
 import org.xlp.utils.io.XLPIOUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.util.Properties;
 
 /**
@@ -24,12 +26,15 @@ public class PropertiesFileReaderUtils {
     public static Properties load(String fileName){
         Properties properties = new Properties();
         InputStream inputStream = null;
+        Reader reader = null;
         try {
             inputStream = PropertiesFileReaderUtils.class.getClassLoader()
                     .getResourceAsStream(fileName);
+            //处理中文乱码问题
+            reader = XLPIOUtil.getReader(inputStream, XLPCharsetUtil.UTF8);
             if (LOGGER.isDebugEnabled())
                 LOGGER.debug("加载bean映射配置文件开始： 配置文件名为：" + fileName);
-            properties.load(inputStream);
+            properties.load(reader);
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("加载bean映射配置文件完成");
                 LOGGER.debug("加载的数据为：" + properties);
@@ -39,6 +44,7 @@ public class PropertiesFileReaderUtils {
                 LOGGER.error("加载bean映射配置文件失败！", e);
         }
         XLPIOUtil.closeInputStream(inputStream);
+        XLPIOUtil.closeReader(reader);
         return properties;
     }
 }
