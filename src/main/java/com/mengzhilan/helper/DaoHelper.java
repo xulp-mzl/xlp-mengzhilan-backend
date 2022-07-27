@@ -63,6 +63,7 @@ public class DaoHelper {
      * @return
      */
     public static IBaseDao getIBaseDao(String daoId){
+        if (daoId == null) return null;
         IBaseDao iBaseDao = DAO_MAP.get(daoId);
         if (iBaseDao == null){
             iBaseDao = BeanCreator.getBean(daoId);

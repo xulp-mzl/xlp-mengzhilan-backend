@@ -37,6 +37,7 @@ public class CommonServiceHelper {
      * @return
      */
     public static IBaseService getIBaseService(String serviceId){
+        if (serviceId == null) return null;
         IBaseService iBaseService = SERVICE_MAP.get(serviceId);
         if (iBaseService == null){
             iBaseService = BeanCreator.getBean(serviceId);
