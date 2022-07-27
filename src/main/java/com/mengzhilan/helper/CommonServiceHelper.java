@@ -40,7 +40,9 @@ public class CommonServiceHelper {
         IBaseService iBaseService = SERVICE_MAP.get(serviceId);
         if (iBaseService == null){
             iBaseService = BeanCreator.getBean(serviceId);
-            SERVICE_MAP.put(serviceId, iBaseService);
+            if (iBaseService != null) {
+                SERVICE_MAP.put(serviceId, iBaseService);
+            }
         }
         return iBaseService;
     }

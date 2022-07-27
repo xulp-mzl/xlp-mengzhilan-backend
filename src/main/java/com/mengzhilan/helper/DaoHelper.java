@@ -66,7 +66,9 @@ public class DaoHelper {
         IBaseDao iBaseDao = DAO_MAP.get(daoId);
         if (iBaseDao == null){
             iBaseDao = BeanCreator.getBean(daoId);
-            DAO_MAP.put(daoId, iBaseDao);
+            if(iBaseDao != null){
+                DAO_MAP.put(daoId, iBaseDao);
+            }
         }
         return iBaseDao;
     }
