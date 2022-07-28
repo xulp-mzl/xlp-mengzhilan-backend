@@ -12,6 +12,7 @@ import com.mengzhilan.response.StatusCode;
 import com.mengzhilan.service.model.ModelConfigService;
 import com.mengzhilan.util.ModelBaseConfigReaderUtils;
 import org.xlp.json.JsonObject;
+import org.xlp.utils.XLPCharsetUtil;
 import org.xlp.utils.XLPStringUtil;
 
 /**
@@ -21,6 +22,7 @@ import org.xlp.utils.XLPStringUtil;
 @ExceptionHandler(ExceptionHandlerImpl.class)
 @Controller
 @RequestMapping("/model/configs")
+@ResponseCharset(XLPCharsetUtil.UTF8)
 public class ModelConfigController {
     private ModelConfigService service = CommonServiceHelper.getModelConfigService();
 
@@ -28,7 +30,6 @@ public class ModelConfigController {
      * 配置模型基本信息
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.POST)
     public ResponseResult saveBaseConfig(@RequestBody String body){
         if (XLPStringUtil.isEmpty(body)){
@@ -44,7 +45,6 @@ public class ModelConfigController {
      * 获取模型配置基本信息
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.GET)
     public ResponseResult getBaseConfig(@RequestParam("modelId") String modelId){
         ModelFormAndTableBaseConfigInfo configInfo = ModelBaseConfigReaderUtils.getBaseConfigInfoFromCache(modelId);

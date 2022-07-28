@@ -15,6 +15,7 @@ import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.response.StatusCode;
 import com.mengzhilan.service.model.ModelAttributeService;
 import com.mengzhilan.util.ModelAttributeReaderUtils;
+import org.xlp.utils.XLPCharsetUtil;
 import org.xlp.utils.XLPStringUtil;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.List;
 @ExceptionHandler(ExceptionHandlerImpl.class)
 @Controller
 @RequestMapping("/model/attrs")
+@ResponseCharset(XLPCharsetUtil.UTF8)
 public class ModelAttributeController {
     /**
      * 模型属性操作服务
@@ -38,7 +40,6 @@ public class ModelAttributeController {
      * @param modelId
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.GET)
     public ResponseResult getAllModelAttrs(@RequestParam("modelId") String modelId)
             throws BusinessException {
@@ -55,7 +56,6 @@ public class ModelAttributeController {
      * @param attrId
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.GET, value = "/{modelId}/{attrId}")
     public ResponseResult getModelAttribute(@PathVariable("modelId") String modelId,
                                             @PathVariable("attrId") String attrId)

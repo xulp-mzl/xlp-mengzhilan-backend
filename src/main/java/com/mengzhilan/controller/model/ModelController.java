@@ -12,6 +12,7 @@ import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.response.StatusCode;
 import com.mengzhilan.service.model.ModelService;
 import org.xlp.json.JsonObject;
+import org.xlp.utils.XLPCharsetUtil;
 import org.xlp.utils.XLPStringUtil;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 @ExceptionHandler(ExceptionHandlerImpl.class)
 @Controller
 @RequestMapping("/models")
+@ResponseCharset(XLPCharsetUtil.UTF8)
 public class ModelController {
     private ModelService modelService = CommonServiceHelper.getModelService();
 
@@ -31,7 +33,6 @@ public class ModelController {
      * 获取所有的模型信息
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.GET)
     public ResponseResult getAllModels(){
         List<FormInfoBean> formInfoBeans = FormConfig.getFormInfoBeans();
@@ -44,7 +45,6 @@ public class ModelController {
      * 隐藏不需要操作的模型
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.PUT)
     public ResponseResult hideModels(@RequestParam String modelIds){
         if (XLPStringUtil.isEmpty(modelIds)){
@@ -59,7 +59,6 @@ public class ModelController {
      * 隐藏不需要操作的模型
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.POST)
     public ResponseResult updateModel(@RequestBody String body){
         if (XLPStringUtil.isEmpty(body)){

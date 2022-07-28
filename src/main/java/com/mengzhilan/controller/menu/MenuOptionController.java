@@ -11,6 +11,7 @@ import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.response.StatusCode;
 import com.mengzhilan.service.menu.MenuItemService;
 import org.xlp.json.JsonObject;
+import org.xlp.utils.XLPCharsetUtil;
 import org.xlp.utils.XLPStringUtil;
 
 /**
@@ -22,6 +23,7 @@ import org.xlp.utils.XLPStringUtil;
 @ExceptionHandler(ExceptionHandlerImpl.class)
 @Controller
 @RequestMapping("/menus")
+@ResponseCharset(XLPCharsetUtil.UTF8)
 public class MenuOptionController {
     private MenuItemService menuItemService = CommonServiceHelper.getMenuItemService();
 
@@ -29,7 +31,6 @@ public class MenuOptionController {
      * 获树结构菜单信息
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.GET)
     public ResponseResult getTreeMenuItems(){
         return ResponseResult.success(menuItemService.getTreeMenuItems());
@@ -40,7 +41,6 @@ public class MenuOptionController {
      * @param data
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.POST)
     public ResponseResult saveMenuItem(@RequestBody String data){
         if (XLPStringUtil.isEmpty(data)){
@@ -62,7 +62,6 @@ public class MenuOptionController {
      * @param data
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.PUT)
     public ResponseResult updateMenuItem(@RequestBody String data){
         if (XLPStringUtil.isEmpty(data)){
@@ -83,7 +82,6 @@ public class MenuOptionController {
      * 获树结构菜单信息
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.DELETE, value = "/{id}")
     public ResponseResult deleteMenuItems(@PathVariable("id") String id){
         MenuItem menuItem = new MenuItem();

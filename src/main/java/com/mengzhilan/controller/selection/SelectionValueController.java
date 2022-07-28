@@ -10,6 +10,7 @@ import com.mengzhilan.exception.EnableExceptionHandler;
 import com.mengzhilan.exception.ExceptionHandler;
 import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.view.FormValueFromUtils;
+import org.xlp.utils.XLPCharsetUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,13 +25,13 @@ import java.util.Map;
 @ExceptionHandler(ExceptionHandlerImpl.class)
 @Controller
 @RequestMapping("/select/options")
+@ResponseCharset(XLPCharsetUtil.UTF8)
 public class SelectionValueController {
     /**
      * 获取表单条目输入框类型
      *
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.GET, value = "/formInputType")
     public ResponseResult getFormInputTypeSelection(){
         List<Map<String, String>> result = new ArrayList<>();
@@ -51,7 +52,6 @@ public class SelectionValueController {
      *
      * @return
      */
-    @ResponseCharset("utf-8")
     @RequestMapping(method = RequestMethodType.GET, value = "/formValueFrom")
     public ResponseResult getFormValueFromSelection(){
         return ResponseResult.success(FormValueFromUtils.getFormValueFromConfig());
