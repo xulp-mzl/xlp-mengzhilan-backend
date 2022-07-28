@@ -37,7 +37,7 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
         formFieldInfos.sort((o1, o2) -> {
             int orderNo1 = o1.getOrderNo();
             int orderNo2 = o2.getOrderNo();
-            return Integer.compare(orderNo1, orderNo2);
+            return Integer.compare(orderNo2, orderNo1);
         });
         return formFieldInfos;
     }

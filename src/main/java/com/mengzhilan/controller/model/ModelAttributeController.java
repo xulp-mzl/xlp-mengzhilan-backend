@@ -72,4 +72,9 @@ public class ModelAttributeController {
         }
         return ResponseResult.success(modelFormDetailConfig);
     }
+
+    @ResponseCharset("")
+    public ResponseResult saveAttribute(){
+        return ResponseResult.success();
+    }
 }

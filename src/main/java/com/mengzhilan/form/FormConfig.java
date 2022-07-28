@@ -145,6 +145,8 @@ public class FormConfig {
             Class<?> fieldClass;
             XLPColumn xlpColumn;
             XLPId xlpId = null;
+            //主键默认排序号
+            int orderNo = 100;
             for (PropertyDescriptor<?> pd : pds) {
                 formFieldInfo = new FormFieldInfo();
                 formFieldInfo.setFormFieldId(pd.getFieldName());
@@ -155,6 +157,7 @@ public class FormConfig {
                 } else if ((xlpId = pd.getFieldAnnotation(XLPId.class)) != null){
                     fieldDescription = xlpId.descriptor();
                     columnName = xlpId.columnName();
+                    formFieldInfo.setOrderNo(orderNo++);
                 }
                 if (xlpColumn != null || xlpId != null){
                     formFieldInfo.setFormFieldName(XLPStringUtil.isEmpty(fieldDescription)

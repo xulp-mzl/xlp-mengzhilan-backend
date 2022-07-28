@@ -17,6 +17,11 @@ public enum  FormInputType {
     TEXT("普通文本输入框"),
 
     /**
+     * 隐藏框
+     */
+    HIDDEN("隐藏框"),
+
+    /**
      * 可清除普通文本输入框
      */
     CLEARABLE_TEXT("可清除普通文本输入框"),
