@@ -73,8 +73,16 @@ public class ModelAttributeController {
         return ResponseResult.success(modelFormDetailConfig);
     }
 
-    @ResponseCharset("")
-    public ResponseResult saveAttribute(){
+    /**
+     * 保存属性信息
+     * @return
+     */
+    @RequestMapping(method = RequestMethodType.POST)
+    public ResponseResult saveAttribute(@RequestBody String attribute){
+        if (!XLPStringUtil.isEmpty(attribute)){
+            return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "要保存的表单配置信息为空！");
+        }
+        System.out.println(attribute);
         return ResponseResult.success();
     }
 }

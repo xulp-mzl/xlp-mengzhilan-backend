@@ -331,7 +331,6 @@ public class ModelFormDetailConfig extends MZBaseEntity {
         modelFormDetailConfig.setFieldId("");
         modelFormDetailConfig.setFieldName("");
         modelFormDetailConfig.setModelId("");
-        modelFormDetailConfig.setId("");
         return modelFormDetailConfig;
     }
 
