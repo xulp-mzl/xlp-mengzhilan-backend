@@ -15,6 +15,7 @@ import com.mengzhilan.response.ResponseResult;
 import com.mengzhilan.response.StatusCode;
 import com.mengzhilan.service.model.ModelAttributeService;
 import com.mengzhilan.util.ModelAttributeReaderUtils;
+import org.xlp.json.JsonObject;
 import org.xlp.utils.XLPCharsetUtil;
 import org.xlp.utils.XLPStringUtil;
 
@@ -76,13 +77,16 @@ public class ModelAttributeController {
     /**
      * 保存属性信息
      * @return
+     * @throws BusinessException
      */
     @RequestMapping(method = RequestMethodType.POST)
-    public ResponseResult saveAttribute(@RequestBody String attribute){
-        if (!XLPStringUtil.isEmpty(attribute)){
+    public ResponseResult saveAttribute(@RequestBody String attribute) throws BusinessException {
+        if (XLPStringUtil.isEmpty(attribute)){
             return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "要保存的表单配置信息为空！");
         }
-        System.out.println(attribute);
+        ModelFormDetailConfig modelFormDetailConfig = JsonObject.fromJsonString(attribute)
+                .toBean(ModelFormDetailConfig.class);
+        service.saveModelFormDetailConfig(modelFormDetailConfig);
         return ResponseResult.success();
     }
 }

@@ -38,4 +38,20 @@ public interface ModelAttributeService extends IBaseService {
      * @return
      */
     ModelFormDetailConfig getModelFormDetailConfig(String modelId, String attrId);
+
+    /**
+     * 验证指定的模型id对应的模型是否存在
+     *
+     * @param modelId 指定的模型id
+     * @throws BusinessException 不存在，则抛出该异常
+     */
+    void validate(String modelId) throws BusinessException;
+
+    /**
+     * 保存模型表单配置信息
+     *
+     * @param modelFormDetailConfig
+     * @throws BusinessException
+     */
+    void saveModelFormDetailConfig(ModelFormDetailConfig modelFormDetailConfig) throws BusinessException;
 }

@@ -64,4 +64,31 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
     public ModelFormDetailConfig getModelFormDetailConfig(String modelId, String attrId) {
         return modelAttributeDao.getModelFormDetailConfig(modelId, attrId);
     }
+
+    /**
+     * 保存模型表单配置信息
+     *
+     * @param modelFormDetailConfig
+     * @throws BusinessException
+     */
+    @Override
+    public void saveModelFormDetailConfig(ModelFormDetailConfig modelFormDetailConfig)
+            throws BusinessException {
+        validate(modelFormDetailConfig.getModelId());
+        ModelFormDetailConfig config ;
+    }
+
+    /**
+     * 验证指定的模型id对应的模型是否存在
+     *
+     * @param modelId 指定的模型id
+     * @throws BusinessException 不存在，则抛出该异常
+     */
+    @Override
+    public void validate(String modelId) throws BusinessException {
+        FormInfoBean formInfoBean = FormConfig.findFormInfoBean(modelId);
+        if (formInfoBean == null){
+            throw new BusinessException("根据模型id（modelId）查询模型属性失败!");
+        }
+    }
 }
