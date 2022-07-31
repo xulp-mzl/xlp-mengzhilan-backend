@@ -3,12 +3,14 @@ package com.mengzhilan.service.model.impl;
 import com.mengzhilan.base.service.ApplicationBaseServiceAbstract;
 import com.mengzhilan.dao.model.ModelAttributeDao;
 import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
+import com.mengzhilan.enumeration.attribute.AttributeType;
 import com.mengzhilan.exception.BusinessException;
 import com.mengzhilan.form.FormConfig;
 import com.mengzhilan.form.FormFieldInfo;
 import com.mengzhilan.form.FormInfoBean;
 import com.mengzhilan.helper.DaoHelper;
 import com.mengzhilan.service.model.ModelAttributeService;
+import com.mengzhilan.util.ModelAttributeReaderUtils;
 
 import java.util.List;
 
@@ -28,10 +30,7 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
      */
     @Override
     public List<FormFieldInfo> geFormFieldInfosByModelId(String modelId) throws BusinessException {
-        FormInfoBean formInfoBean = FormConfig.findFormInfoBean(modelId);
-        if (formInfoBean == null){
-           throw new BusinessException("根据模型id（modelId）查询模型属性失败!");
-        }
+        FormInfoBean formInfoBean = validate(modelId);
         List<FormFieldInfo> formFieldInfos = formInfoBean.getFormFieldInfos();
         //排序
         formFieldInfos.sort((o1, o2) -> {
@@ -74,21 +73,46 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
     @Override
     public void saveModelFormDetailConfig(ModelFormDetailConfig modelFormDetailConfig)
             throws BusinessException {
-        validate(modelFormDetailConfig.getModelId());
-        ModelFormDetailConfig config ;
+        FormInfoBean formInfoBean = validate(modelFormDetailConfig.getModelId());
+        //获取模型表单配置详细信息
+        ModelFormDetailConfig config = ModelAttributeReaderUtils
+                .getModelFormDetailConfig(modelFormDetailConfig.getModelId(), modelFormDetailConfig.getFieldId());
+        if (config != null){
+            config.setAttributeType(config.getAttributeType());
+            config.setCanDelete(config.getCanDelete());
+            update(config);
+            //删除缓存中的旧数据
+            ModelAttributeReaderUtils.deleteFromCache(modelFormDetailConfig.getModelId(),
+                    modelFormDetailConfig.getFieldId());
+        } else {
+            modelFormDetailConfig.setId(null);
+            modelFormDetailConfig.setAttributeType(AttributeType.EXTEND_ATTR);
+            modelFormDetailConfig.setCanDelete(true);
+            save(modelFormDetailConfig);
+            //向缓存中添加新添的数据
+            FormFieldInfo formFieldInfo = new FormFieldInfo();
+            formFieldInfo.setOrderNo(modelFormDetailConfig.getOrderNo());
+            formFieldInfo.setFormFieldName(modelFormDetailConfig.getFieldName());
+            formFieldInfo.setFormFieldId(modelFormDetailConfig.getFieldId());
+            formFieldInfo.setCanDelete(true);
+            formFieldInfo.setAttributeType(AttributeType.EXTEND_ATTR);
+            formInfoBean.addFormFieldInfo(formFieldInfo);
+        }
     }
 
     /**
-     * 验证指定的模型id对应的模型是否存在
+     * 验证指定的模型id对应的模型是否存在,存在返回模型信息，否则抛出异常
      *
      * @param modelId 指定的模型id
      * @throws BusinessException 不存在，则抛出该异常
+     * @return
      */
     @Override
-    public void validate(String modelId) throws BusinessException {
+    public FormInfoBean validate(String modelId) throws BusinessException {
         FormInfoBean formInfoBean = FormConfig.findFormInfoBean(modelId);
         if (formInfoBean == null){
             throw new BusinessException("根据模型id（modelId）查询模型属性失败!");
         }
+        return formInfoBean;
     }
 }

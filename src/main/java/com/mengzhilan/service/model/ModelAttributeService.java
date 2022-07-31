@@ -3,6 +3,7 @@ package com.mengzhilan.service.model;
 import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
 import com.mengzhilan.exception.BusinessException;
 import com.mengzhilan.form.FormFieldInfo;
+import com.mengzhilan.form.FormInfoBean;
 import org.xlp.mv.IBaseService;
 
 import java.util.List;
@@ -40,12 +41,12 @@ public interface ModelAttributeService extends IBaseService {
     ModelFormDetailConfig getModelFormDetailConfig(String modelId, String attrId);
 
     /**
-     * 验证指定的模型id对应的模型是否存在
+     * 验证指定的模型id对应的模型是否存在,存在返回模型信息，否则抛出异常
      *
      * @param modelId 指定的模型id
      * @throws BusinessException 不存在，则抛出该异常
      */
-    void validate(String modelId) throws BusinessException;
+    FormInfoBean validate(String modelId) throws BusinessException;
 
     /**
      * 保存模型表单配置信息
