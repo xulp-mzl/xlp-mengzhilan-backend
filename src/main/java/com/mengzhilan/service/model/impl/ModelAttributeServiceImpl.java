@@ -85,18 +85,26 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
             ModelAttributeReaderUtils.deleteFromCache(modelFormDetailConfig.getModelId(),
                     modelFormDetailConfig.getFieldId());
         } else {
+            // TODO
+            FormFieldInfo formFieldInfo = FormConfig.findFormFieldInfo(formInfoBean,
+                    modelFormDetailConfig.getFieldId());
+            if (formFieldInfo != null){
+                modelFormDetailConfig.setAttributeType(formFieldInfo.getAttributeType());
+                modelFormDetailConfig.setCanDelete(formFieldInfo.getCanDelete());
+            } else {
+                formFieldInfo = new FormFieldInfo();
+                formInfoBean.addFormFieldInfo(formFieldInfo);
+                modelFormDetailConfig.setAttributeType(AttributeType.EXTEND_ATTR);
+                modelFormDetailConfig.setCanDelete(true);
+            }
             modelFormDetailConfig.setId(null);
-            modelFormDetailConfig.setAttributeType(AttributeType.EXTEND_ATTR);
-            modelFormDetailConfig.setCanDelete(true);
             save(modelFormDetailConfig);
-            //向缓存中添加新添的数据
-            FormFieldInfo formFieldInfo = new FormFieldInfo();
+            //更新缓存中的数据
             formFieldInfo.setOrderNo(modelFormDetailConfig.getOrderNo());
             formFieldInfo.setFormFieldName(modelFormDetailConfig.getFieldName());
             formFieldInfo.setFormFieldId(modelFormDetailConfig.getFieldId());
-            formFieldInfo.setCanDelete(true);
-            formFieldInfo.setAttributeType(AttributeType.EXTEND_ATTR);
-            formInfoBean.addFormFieldInfo(formFieldInfo);
+            formFieldInfo.setCanDelete(modelFormDetailConfig.getCanDelete());
+            formFieldInfo.setAttributeType(modelFormDetailConfig.getAttributeType());
         }
     }
 
