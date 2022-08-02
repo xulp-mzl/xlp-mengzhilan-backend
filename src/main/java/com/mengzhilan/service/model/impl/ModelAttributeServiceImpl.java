@@ -11,7 +11,11 @@ import com.mengzhilan.form.FormInfoBean;
 import com.mengzhilan.helper.DaoHelper;
 import com.mengzhilan.service.model.ModelAttributeService;
 import com.mengzhilan.util.ModelAttributeReaderUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xlp.db.tableoption.annotation.XLPTransaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +23,8 @@ import java.util.List;
  */
 public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
         implements ModelAttributeService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ModelAttributeServiceImpl.class);
+
     private ModelAttributeDao modelAttributeDao = DaoHelper.getModelAttributeDao();
 
     /**
@@ -85,7 +91,6 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
             ModelAttributeReaderUtils.deleteFromCache(modelFormDetailConfig.getModelId(),
                     modelFormDetailConfig.getFieldId());
         } else {
-            // TODO
             FormFieldInfo formFieldInfo = FormConfig.findFormFieldInfo(formInfoBean,
                     modelFormDetailConfig.getFieldId());
             if (formFieldInfo != null){
@@ -108,6 +113,52 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
         }
     }
 
+    /***
+     * 批量设置模型表单配置信息
+     *
+     * @param modelId
+     * @param attrIds
+     * @throws BusinessException
+     */
+    @XLPTransaction
+    @Override
+    public void batchSetting(String modelId, String[] attrIds){
+        FormInfoBean formInfoBean = FormConfig.findFormInfoBean(modelId);
+        //存储未设置的属性id，设置了的不再重新设置
+        List<String> notSettingAttrIds = new ArrayList<>();
+        List<ModelFormDetailConfig> inDbConfigs = getModelFormDetailConfigByModelId(modelId);
+        for (String attrId : attrIds) {
+            boolean hasExist = false;
+            for (ModelFormDetailConfig inDbConfig : inDbConfigs) {
+                if (inDbConfig.getFieldId().equals(attrId)){
+                    hasExist = true;
+                    break;
+                }
+            }
+            if (hasExist){
+                if (LOGGER.isInfoEnabled() && formInfoBean != null) {
+                    LOGGER.info("【" + formInfoBean.getBeanName() + "】该属性值【" + attrId + "】已设置过，不在重新设置！");
+                }
+                continue;
+            }
+            notSettingAttrIds.add(attrId);
+        }
+
+        List<ModelFormDetailConfig> configs = new ArrayList<>();
+        notSettingAttrIds.forEach((item) -> {
+            FormFieldInfo formFieldInfo = FormConfig.findFormFieldInfo(formInfoBean, item);
+            if (formFieldInfo != null){
+                //保存数据
+                ModelFormDetailConfig config = ModelFormDetailConfig.of(formFieldInfo);
+                config.setModelId(modelId);
+                configs.add(config);
+            } else if (LOGGER.isWarnEnabled() && formInfoBean != null) {
+                LOGGER.warn("【" + formInfoBean.getBeanName() + "】中没有该属性值【" + item + "】");
+            }
+        });
+        save(configs);
+    }
+
     /**
      * 验证指定的模型id对应的模型是否存在,存在返回模型信息，否则抛出异常
      *
@@ -119,7 +170,7 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
     public FormInfoBean validate(String modelId) throws BusinessException {
         FormInfoBean formInfoBean = FormConfig.findFormInfoBean(modelId);
         if (formInfoBean == null){
-            throw new BusinessException("根据模型id（modelId）查询模型属性失败!");
+            throw new BusinessException("根据模型id[" + modelId + "]查询模型信息失败!");
         }
         return formInfoBean;
     }

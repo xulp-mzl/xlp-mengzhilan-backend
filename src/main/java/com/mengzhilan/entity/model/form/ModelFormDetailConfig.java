@@ -4,12 +4,16 @@ import com.mengzhilan.base.MZBaseEntity;
 import com.mengzhilan.enumeration.FormInputType;
 import com.mengzhilan.enumeration.ValueFromType;
 import com.mengzhilan.enumeration.attribute.AttributeType;
+import com.mengzhilan.form.FormFieldInfo;
+import org.xlp.assertion.AssertUtils;
 import org.xlp.db.ddl.annotation.XLPIndex;
 import org.xlp.db.tableoption.annotation.XLPColumn;
 import org.xlp.db.tableoption.annotation.XLPEntity;
 import org.xlp.db.tableoption.xlpenum.DataType;
 import org.xlp.javabean.annotation.Bean;
 import org.xlp.javabean.annotation.FieldName;
+
+import java.util.Date;
 
 /**
  * Create by xlp on 2022/7/7
@@ -332,6 +336,33 @@ public class ModelFormDetailConfig extends MZBaseEntity {
         modelFormDetailConfig.setFieldName("");
         modelFormDetailConfig.setModelId("");
         return modelFormDetailConfig;
+    }
+
+    /**
+     * 创建一个默认的配置对象，并给属性赋予相应的默认值
+     *
+     * @param formFieldInfo
+     * @return
+     * @throws NullPointerException 假如参数为null，则抛出该异常
+     */
+    public static ModelFormDetailConfig of(FormFieldInfo formFieldInfo){
+        AssertUtils.isNotNull(formFieldInfo, "formFieldInfo parameter is null!");
+        ModelFormDetailConfig config = new ModelFormDetailConfig();
+        Date date = new Date();
+        config.setUpdateTime(date);
+        config.setCreateTime(date);
+        config.setFieldName(formFieldInfo.getFormFieldName());
+        config.setFieldId(formFieldInfo.getFormFieldId());
+        config.setFormInputType(FormInputType.TEXT);
+        config.setEdit(true);
+        config.setAdding(true);
+        config.setEditShow(true);
+        config.setAddingShow(true);
+        config.setPlaceholder("请输入" + formFieldInfo.getFormFieldName());
+        config.setRequired(false);
+        config.setAttributeType(formFieldInfo.getAttributeType());
+        config.setCanDelete(formFieldInfo.getCanDelete());
+        return config;
     }
 
     @Override

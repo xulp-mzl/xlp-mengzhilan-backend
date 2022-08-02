@@ -89,4 +89,19 @@ public class ModelAttributeController {
         service.saveModelFormDetailConfig(modelFormDetailConfig);
         return ResponseResult.success();
     }
+
+    /**
+     * 批量配置属性信息
+     * @return
+     * @throws BusinessException
+     */
+    @RequestMapping(method = RequestMethodType.POST, value = "batchSetting")
+    public ResponseResult batchSetting(@RequestParam("modelId") String modelId,
+                                       @RequestParam("attrIds") String attrIds)
+            throws BusinessException {
+        service.validate(modelId);
+        service.batchSetting(modelId,
+                XLPStringUtil.isEmpty(attrIds) ? new String[0] : attrIds.split(","));
+        return ResponseResult.success();
+    }
 }

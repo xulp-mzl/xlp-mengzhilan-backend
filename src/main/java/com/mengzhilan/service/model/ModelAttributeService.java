@@ -45,6 +45,7 @@ public interface ModelAttributeService extends IBaseService {
      *
      * @param modelId 指定的模型id
      * @throws BusinessException 不存在，则抛出该异常
+     * @return
      */
     FormInfoBean validate(String modelId) throws BusinessException;
 
@@ -55,4 +56,13 @@ public interface ModelAttributeService extends IBaseService {
      * @throws BusinessException
      */
     void saveModelFormDetailConfig(ModelFormDetailConfig modelFormDetailConfig) throws BusinessException;
+
+    /***
+     * 批量设置模型表单配置信息
+     *
+     * @param modelId
+     * @param attrIds
+     * @throws BusinessException
+     */
+    void batchSetting(String modelId, String[] attrIds);
 }
