@@ -57,6 +57,13 @@ public interface ModelAttributeService extends IBaseService {
      */
     void saveModelFormDetailConfig(ModelFormDetailConfig modelFormDetailConfig) throws BusinessException;
 
+    /**
+     * 添加扩展属性
+     * @param modelFormDetailConfig
+     * @throws BusinessException
+     */
+    void addModelFormDetailConfig(ModelFormDetailConfig modelFormDetailConfig) throws BusinessException;
+
     /***
      * 批量设置模型表单配置信息
      *

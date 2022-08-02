@@ -84,33 +84,55 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
         ModelFormDetailConfig config = ModelAttributeReaderUtils
                 .getModelFormDetailConfig(modelFormDetailConfig.getModelId(), modelFormDetailConfig.getFieldId());
         if (config != null){
-            config.setAttributeType(config.getAttributeType());
-            config.setCanDelete(config.getCanDelete());
-            update(config);
+            modelFormDetailConfig.setId(config.getId());
+            modelFormDetailConfig.setAttributeType(config.getAttributeType());
+            modelFormDetailConfig.setCanDelete(config.getCanDelete());
+            update(modelFormDetailConfig);
             //删除缓存中的旧数据
             ModelAttributeReaderUtils.deleteFromCache(modelFormDetailConfig.getModelId(),
                     modelFormDetailConfig.getFieldId());
         } else {
-            FormFieldInfo formFieldInfo = FormConfig.findFormFieldInfo(formInfoBean,
-                    modelFormDetailConfig.getFieldId());
-            if (formFieldInfo != null){
-                modelFormDetailConfig.setAttributeType(formFieldInfo.getAttributeType());
-                modelFormDetailConfig.setCanDelete(formFieldInfo.getCanDelete());
-            } else {
-                formFieldInfo = new FormFieldInfo();
-                formInfoBean.addFormFieldInfo(formFieldInfo);
-                modelFormDetailConfig.setAttributeType(AttributeType.EXTEND_ATTR);
-                modelFormDetailConfig.setCanDelete(true);
-            }
-            modelFormDetailConfig.setId(null);
-            save(modelFormDetailConfig);
-            //更新缓存中的数据
-            formFieldInfo.setOrderNo(modelFormDetailConfig.getOrderNo());
-            formFieldInfo.setFormFieldName(modelFormDetailConfig.getFieldName());
-            formFieldInfo.setFormFieldId(modelFormDetailConfig.getFieldId());
-            formFieldInfo.setCanDelete(modelFormDetailConfig.getCanDelete());
-            formFieldInfo.setAttributeType(modelFormDetailConfig.getAttributeType());
+            _save(modelFormDetailConfig, formInfoBean, false);
         }
+    }
+
+    private void _save(ModelFormDetailConfig modelFormDetailConfig, FormInfoBean formInfoBean,
+                       boolean isAdd) throws BusinessException {
+        FormFieldInfo formFieldInfo = FormConfig.findFormFieldInfo(formInfoBean,
+                modelFormDetailConfig.getFieldId());
+        if (formFieldInfo != null){
+            if (isAdd){
+                throw new BusinessException("【" + formInfoBean.getBeanId() + "】模型中已存在【" +
+                        modelFormDetailConfig.getFieldId() + "】属性！");
+            }
+            modelFormDetailConfig.setAttributeType(formFieldInfo.getAttributeType());
+            modelFormDetailConfig.setCanDelete(formFieldInfo.getCanDelete());
+        } else {
+            formFieldInfo = new FormFieldInfo();
+            formInfoBean.addFormFieldInfo(formFieldInfo);
+            modelFormDetailConfig.setAttributeType(AttributeType.EXTEND_ATTR);
+            modelFormDetailConfig.setCanDelete(true);
+        }
+        modelFormDetailConfig.setId(null);
+        save(modelFormDetailConfig);
+        //更新缓存中的数据
+        formFieldInfo.setOrderNo(modelFormDetailConfig.getOrderNo());
+        formFieldInfo.setFormFieldName(modelFormDetailConfig.getFieldName());
+        formFieldInfo.setFormFieldId(modelFormDetailConfig.getFieldId());
+        formFieldInfo.setCanDelete(modelFormDetailConfig.getCanDelete());
+        formFieldInfo.setAttributeType(modelFormDetailConfig.getAttributeType());
+    }
+
+    /**
+     * 添加扩展属性
+     *
+     * @param modelFormDetailConfig
+     * @throws BusinessException
+     */
+    @Override
+    public void addModelFormDetailConfig(ModelFormDetailConfig modelFormDetailConfig) throws BusinessException {
+        FormInfoBean formInfoBean = validate(modelFormDetailConfig.getModelId());
+        _save(modelFormDetailConfig, formInfoBean, true);
     }
 
     /***

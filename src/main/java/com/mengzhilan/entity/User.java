@@ -1,5 +1,6 @@
 package com.mengzhilan.entity;
 
+import com.mengzhilan.base.ExtendedAttr;
 import com.mengzhilan.base.MZBaseEntity;
 import com.mengzhilan.base.Version;
 import org.xlp.db.ddl.annotation.XLPIndex;
@@ -10,6 +11,9 @@ import org.xlp.db.tableoption.xlpenum.DataType;
 import org.xlp.javabean.annotation.Bean;
 import org.xlp.javabean.annotation.FieldName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Create by xlp on 2021/3/28
  *
@@ -17,7 +21,7 @@ import org.xlp.javabean.annotation.FieldName;
  */
 @Bean
 @XLPEntity(tableName = "mz_user", descriptor = "用户信息表")
-public class User extends MZBaseEntity implements Version {
+public class User extends MZBaseEntity implements Version, ExtendedAttr {
     private static final long serialVersionUID = -1663355112060933818L;
 
     @FieldName
@@ -57,6 +61,12 @@ public class User extends MZBaseEntity implements Version {
     @XLPColumn(columnName = "version", dataType = DataType.INT,
             descriptor = "版本信息", isNull = false, zeroFill = true)
     private int version;
+
+    /**
+     * 扩展属性集合
+     */
+    @FieldName
+    private Map<String, Object> attributes = new HashMap<>();
 
     /**
      * 获取用户类型
@@ -180,17 +190,45 @@ public class User extends MZBaseEntity implements Version {
         this.version = version;
     }
 
+    /**
+     * 根据扩展属性id获取扩展属性值
+     *
+     * @param attrId 扩展属性id
+     * @return
+     */
     @Override
-    public String toString() {
-        return "User{" +
-                "classId='" + getClassId() + '\'' +
-                ", id='" + getId() + '\'' +
-                ", userType='" + userType + '\'' +
-                ", profileUrl='" + profileUrl + '\'' +
-                ", userNo='" + userNo + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", password='" + password + '\'' +
-                ", secretKey='" + secretKey + '\'' +
-                "} ";
+    public Object getAttribute(String attrId) {
+        return attributes.get(attrId);
+    }
+
+    /**
+     * 设置扩展属性值
+     *
+     * @param attrId
+     * @param value
+     */
+    @Override
+    public void setAttribute(String attrId, Object value) {
+        attributes.put(attrId, value);
+    }
+
+    /**
+     * 获取所有的扩展属性
+     *
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    /**
+     * 设置所有的扩展属性
+     *
+     * @param attributes
+     */
+    @Override
+    public void setAttributes(Map<String, Object> attributes) {
+        if (attributes != null) this.attributes = attributes;
     }
 }

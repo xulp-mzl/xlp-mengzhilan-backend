@@ -82,11 +82,27 @@ public class ModelAttributeController {
     @RequestMapping(method = RequestMethodType.POST)
     public ResponseResult saveAttribute(@RequestBody String attribute) throws BusinessException {
         if (XLPStringUtil.isEmpty(attribute)){
-            return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "要保存的表单配置信息为空！");
+            return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "要保存的属性配置信息为空！");
         }
         ModelFormDetailConfig modelFormDetailConfig = JsonObject.fromJsonString(attribute)
                 .toBean(ModelFormDetailConfig.class);
         service.saveModelFormDetailConfig(modelFormDetailConfig);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 添加扩展属性信息
+     * @return
+     * @throws BusinessException
+     */
+    @RequestMapping(method = RequestMethodType.POST, value = "/addExtendAttribute")
+    public ResponseResult addExtendAttribute(@RequestBody String attribute) throws BusinessException {
+        if (XLPStringUtil.isEmpty(attribute)){
+            return ResponseResult.error(StatusCode.NOT_REQUEST_BODY, "要保存的扩展属性为空！");
+        }
+        ModelFormDetailConfig modelFormDetailConfig = JsonObject.fromJsonString(attribute)
+                .toBean(ModelFormDetailConfig.class);
+        service.addModelFormDetailConfig(modelFormDetailConfig);
         return ResponseResult.success();
     }
 
