@@ -195,7 +195,15 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
      */
     @Override
     public boolean deleteAttributes(String modelId, String attrIds) {
-        return modelAttributeDao.deleteAttributes(modelId, attrIds.split(","));
+        String[] attrIdArr = attrIds.split(",");
+        boolean success = modelAttributeDao.deleteAttributes(modelId, attrIdArr);
+        if (success){
+            // 移除缓存中的数据
+            for (String attrId : attrIdArr) {
+                FormConfig.removeFormFieldInfo(modelId, attrId);
+            }
+        }
+        return success;
     }
 
     /**

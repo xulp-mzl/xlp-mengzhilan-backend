@@ -63,6 +63,7 @@ public class FormConfig {
     public static void reload(){
         CLASS_NAMES.clear();
         CLASS_SET.clear();
+        FORM_INFO_BEANS.clear();
         LoadBeanForm loadBeanForm = FormConfig.class.getAnnotation(LoadBeanForm.class);
         // 读取指定包名下的类
         ScannerPkg scannerPkg = new ClassPathPkgScanner();
@@ -272,5 +273,27 @@ public class FormConfig {
             if (infoBean.getBeanId().equals(beanId)) return infoBean;
         }
         return null;
+    }
+
+    /**
+     * 移除缓存中的属性
+     *
+     * @param beanId
+     * @param formFieldId
+     */
+    public static void removeFormFieldInfo(String beanId, String formFieldId){
+        FormInfoBean formInfoBean = findFormInfoBean(beanId);
+        if (formInfoBean != null){
+            List<FormFieldInfo> formFieldInfos = formInfoBean.getFormFieldInfos();
+            Iterator<FormFieldInfo> iterator = formFieldInfos.iterator();
+            FormFieldInfo formFieldInfo;
+            while (iterator.hasNext()){
+                formFieldInfo = iterator.next();
+                if (formFieldInfo.getFormFieldId().equals(formFieldId)){
+                    iterator.remove();
+                    break;
+                }
+            }
+        }
     }
 }
