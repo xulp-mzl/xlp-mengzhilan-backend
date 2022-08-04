@@ -51,7 +51,9 @@ public class ModelAttributeDaoImpl extends BaseDao implements ModelAttributeDao 
     @Override
     public boolean deleteAttributes(String modelId, String[] attrIds) {
         DeleteSQL<ModelFormDetailConfig> deleteSQL = new DeleteSQL<>(ModelFormDetailConfig.class);
-        deleteSQL.andEq("modelId", modelId).andIn("fieldId", attrIds);
+        deleteSQL.andEq("modelId", modelId)
+                .andEq("canDelete", true)
+                .andIn("fieldId", (Object[]) attrIds);
         return update(deleteSQL);
     }
 }

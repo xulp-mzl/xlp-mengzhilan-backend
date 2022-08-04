@@ -126,7 +126,7 @@ public class ModelAttributeController {
      * @return
      * @throws BusinessException
      */
-    @RequestMapping(method = RequestMethodType.GET)
+    @RequestMapping(method = RequestMethodType.DELETE)
     public ResponseResult deleteAttributes(@RequestParam("modelId") String modelId,
                                           @RequestParam("attrIds") String attrIds) throws BusinessException {
         if (XLPStringUtil.isEmpty(modelId)
