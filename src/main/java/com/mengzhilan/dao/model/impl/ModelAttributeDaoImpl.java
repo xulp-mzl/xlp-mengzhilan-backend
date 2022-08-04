@@ -2,6 +2,7 @@ package com.mengzhilan.dao.model.impl;
 
 import com.mengzhilan.dao.model.ModelAttributeDao;
 import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
+import org.xlp.db.sql.DeleteSQL;
 import org.xlp.db.sql.QuerySQL;
 import org.xlp.mv.BaseDao;
 
@@ -38,5 +39,19 @@ public class ModelAttributeDaoImpl extends BaseDao implements ModelAttributeDao 
         QuerySQL<ModelFormDetailConfig> querySQL = new QuerySQL<>(ModelFormDetailConfig.class);
         querySQL.andEq("modelId", modelId).andEq("fieldId", attrId);
         return find(querySQL);
+    }
+
+    /**
+     * 删除模型属性
+     *
+     * @param modelId
+     * @param attrIds
+     * @return
+     */
+    @Override
+    public boolean deleteAttributes(String modelId, String[] attrIds) {
+        DeleteSQL<ModelFormDetailConfig> deleteSQL = new DeleteSQL<>(ModelFormDetailConfig.class);
+        deleteSQL.andEq("modelId", modelId).andIn("fieldId", attrIds);
+        return update(deleteSQL);
     }
 }

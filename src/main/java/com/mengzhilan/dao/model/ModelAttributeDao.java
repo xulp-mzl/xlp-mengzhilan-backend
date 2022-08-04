@@ -27,4 +27,12 @@ public interface ModelAttributeDao extends IBaseDao {
      * @return
      */
     ModelFormDetailConfig getModelFormDetailConfig(String modelId, String attrId);
+
+    /**
+     * 删除模型属性
+     * @param modelId
+     * @param attrIds
+     * @return
+     */
+    boolean deleteAttributes(String modelId, String[] attrIds);
 }

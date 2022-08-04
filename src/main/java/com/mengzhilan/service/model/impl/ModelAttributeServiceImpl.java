@@ -88,6 +88,11 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
             modelFormDetailConfig.setAttributeType(config.getAttributeType());
             modelFormDetailConfig.setCanDelete(config.getCanDelete());
             update(modelFormDetailConfig);
+            //更新缓存中的数据
+            FormFieldInfo formFieldInfo = FormConfig.findFormFieldInfo(formInfoBean,
+                    modelFormDetailConfig.getFieldId());
+            formFieldInfo.setFormFieldName(modelFormDetailConfig.getFieldName());
+            formFieldInfo.setOrderNo(modelFormDetailConfig.getOrderNo());
             //删除缓存中的旧数据
             ModelAttributeReaderUtils.deleteFromCache(modelFormDetailConfig.getModelId(),
                     modelFormDetailConfig.getFieldId());
@@ -179,6 +184,18 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
             }
         });
         save(configs);
+    }
+
+    /**
+     * 删除模型属性
+     *
+     * @param modelId
+     * @param attrIds
+     * @return
+     */
+    @Override
+    public boolean deleteAttributes(String modelId, String attrIds) {
+        return modelAttributeDao.deleteAttributes(modelId, attrIds.split(","));
     }
 
     /**

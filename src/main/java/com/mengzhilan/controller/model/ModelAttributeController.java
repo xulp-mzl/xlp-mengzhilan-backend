@@ -120,4 +120,22 @@ public class ModelAttributeController {
                 XLPStringUtil.isEmpty(attrIds) ? new String[0] : attrIds.split(","));
         return ResponseResult.success();
     }
+
+    /**
+     * 删除属性信息
+     * @return
+     * @throws BusinessException
+     */
+    @RequestMapping(method = RequestMethodType.GET)
+    public ResponseResult deleteAttributes(@RequestParam("modelId") String modelId,
+                                          @RequestParam("attrIds") String attrIds) throws BusinessException {
+        if (XLPStringUtil.isEmpty(modelId)
+            || XLPStringUtil.isEmpty(attrIds)){
+            return ResponseResult.error(StatusCode.REQUEST_PARAMETER_LOSE, "模型id或属性id缺失！");
+        }
+        if(!service.deleteAttributes(modelId, attrIds)){
+            return ResponseResult.error("模型属性删除失败！" );
+        }
+        return ResponseResult.success();
+    }
 }

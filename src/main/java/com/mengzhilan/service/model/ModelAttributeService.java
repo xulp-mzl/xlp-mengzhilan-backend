@@ -72,4 +72,12 @@ public interface ModelAttributeService extends IBaseService {
      * @throws BusinessException
      */
     void batchSetting(String modelId, String[] attrIds);
+
+    /**
+     * 删除模型属性
+     * @param modelId
+     * @param attrIds
+     * @return
+     */
+    boolean deleteAttributes(String modelId, String attrIds);
 }
