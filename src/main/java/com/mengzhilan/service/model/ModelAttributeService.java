@@ -80,4 +80,13 @@ public interface ModelAttributeService extends IBaseService {
      * @return
      */
     boolean deleteAttributes(String modelId, String attrIds);
+
+    /**
+     * 模型属性发布
+     *
+     * @param modelId
+     * @param attrIds
+     * @return
+     */
+    boolean publishAttributes(String modelId, String attrIds) throws BusinessException;
 }

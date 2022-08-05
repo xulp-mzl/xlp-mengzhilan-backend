@@ -2,8 +2,10 @@ package com.mengzhilan.dao.model.impl;
 
 import com.mengzhilan.dao.model.ModelAttributeDao;
 import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
+import com.mengzhilan.enumeration.attribute.AttributeType;
 import org.xlp.db.sql.DeleteSQL;
 import org.xlp.db.sql.QuerySQL;
+import org.xlp.db.sql.UpdateSQL;
 import org.xlp.mv.BaseDao;
 
 import java.util.List;
@@ -55,5 +57,22 @@ public class ModelAttributeDaoImpl extends BaseDao implements ModelAttributeDao 
                 .andEq("canDelete", true)
                 .andIn("fieldId", (Object[]) attrIds);
         return update(deleteSQL);
+    }
+
+    /**
+     * 发布模型属性
+     *
+     * @param modelId
+     * @param attrIdArr
+     * @return
+     */
+    @Override
+    public boolean publishAttributes(String modelId, String[] attrIdArr) {
+        UpdateSQL<ModelFormDetailConfig> updateSQL = new UpdateSQL<>(ModelFormDetailConfig.class);
+        updateSQL.set("canDelete", false)
+                .andEq("modelId", modelId)
+                .andIn("fieldId", (Object[]) attrIdArr)
+                .andEq("attributeType", AttributeType.EXTEND_ATTR.name());
+        return update(updateSQL);
     }
 }

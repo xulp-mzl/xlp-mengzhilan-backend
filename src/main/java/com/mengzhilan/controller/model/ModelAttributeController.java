@@ -124,17 +124,34 @@ public class ModelAttributeController {
     /**
      * 删除属性信息
      * @return
-     * @throws BusinessException
      */
     @RequestMapping(method = RequestMethodType.DELETE)
     public ResponseResult deleteAttributes(@RequestParam("modelId") String modelId,
-                                          @RequestParam("attrIds") String attrIds) throws BusinessException {
+                                          @RequestParam("attrIds") String attrIds){
         if (XLPStringUtil.isEmpty(modelId)
             || XLPStringUtil.isEmpty(attrIds)){
             return ResponseResult.error(StatusCode.REQUEST_PARAMETER_LOSE, "模型id或属性id缺失！");
         }
         if(!service.deleteAttributes(modelId, attrIds)){
             return ResponseResult.error("模型属性删除失败！" );
+        }
+        return ResponseResult.success();
+    }
+
+    /**
+     * 发布属性信息
+     * @return
+     * @throws BusinessException
+     */
+    @RequestMapping(method = RequestMethodType.PUT)
+    public ResponseResult publishAttributes(@RequestParam("modelId") String modelId,
+                                           @RequestParam("attrIds") String attrIds) throws BusinessException {
+        if (XLPStringUtil.isEmpty(modelId)
+                || XLPStringUtil.isEmpty(attrIds)){
+            return ResponseResult.error(StatusCode.REQUEST_PARAMETER_LOSE, "模型id或属性id缺失！");
+        }
+        if(!service.publishAttributes(modelId, attrIds)){
+            return ResponseResult.error("模型属性发布失败！" );
         }
         return ResponseResult.success();
     }

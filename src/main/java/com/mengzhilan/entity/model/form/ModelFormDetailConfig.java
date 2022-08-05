@@ -56,6 +56,7 @@ public class ModelFormDetailConfig extends MZBaseEntity {
     /**
      * 表单条目排序号
      */
+    @XLPIndex
     @FieldName
     @XLPColumn(dataType = DataType.INT, descriptor = "排序号")
     private Integer orderNo = 0;
@@ -362,6 +363,7 @@ public class ModelFormDetailConfig extends MZBaseEntity {
         config.setRequired(false);
         config.setAttributeType(formFieldInfo.getAttributeType());
         config.setCanDelete(formFieldInfo.getCanDelete());
+        config.setOrderNo(formFieldInfo.getOrderNo());
         return config;
     }
 

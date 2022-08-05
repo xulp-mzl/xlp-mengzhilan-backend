@@ -35,4 +35,12 @@ public interface ModelAttributeDao extends IBaseDao {
      * @return
      */
     boolean deleteAttributes(String modelId, String[] attrIds);
+
+    /**
+     * 发布模型属性
+     * @param modelId
+     * @param attrIdArr
+     * @return
+     */
+    boolean publishAttributes(String modelId, String[] attrIdArr);
 }

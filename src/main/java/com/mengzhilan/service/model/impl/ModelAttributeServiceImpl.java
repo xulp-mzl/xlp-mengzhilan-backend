@@ -207,6 +207,29 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
     }
 
     /**
+     * 模型属性发布
+     *
+     * @param modelId
+     * @param attrIds
+     * @return
+     */
+    @Override
+    public boolean publishAttributes(String modelId, String attrIds) throws BusinessException {
+        FormInfoBean formInfoBean = validate(modelId);
+        String[] attrIdArr = attrIds.split(",");
+        boolean success = modelAttributeDao.publishAttributes(modelId, attrIdArr);
+        if (success){
+            FormFieldInfo formFieldInfo;
+            // 更新缓存中的数据
+            for (String attrId : attrIdArr) {
+                formFieldInfo = FormConfig.findFormFieldInfo(formInfoBean, attrId);
+                if (formFieldInfo != null) formFieldInfo.setCanDelete(false);
+            }
+        }
+        return success;
+    }
+
+    /**
      * 验证指定的模型id对应的模型是否存在,存在返回模型信息，否则抛出异常
      *
      * @param modelId 指定的模型id
