@@ -111,7 +111,7 @@ public class ModelAttributeController {
      * @return
      * @throws BusinessException
      */
-    @RequestMapping(method = RequestMethodType.POST, value = "batchSetting")
+    @RequestMapping(method = RequestMethodType.POST, value = "/batchSetting")
     public ResponseResult batchSetting(@RequestParam("modelId") String modelId,
                                        @RequestParam("attrIds") String attrIds)
             throws BusinessException {

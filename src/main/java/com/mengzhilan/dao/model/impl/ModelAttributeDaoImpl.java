@@ -8,6 +8,7 @@ import org.xlp.db.sql.QuerySQL;
 import org.xlp.db.sql.UpdateSQL;
 import org.xlp.mv.BaseDao;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,7 +70,7 @@ public class ModelAttributeDaoImpl extends BaseDao implements ModelAttributeDao 
     @Override
     public boolean publishAttributes(String modelId, String[] attrIdArr) {
         UpdateSQL<ModelFormDetailConfig> updateSQL = new UpdateSQL<>(ModelFormDetailConfig.class);
-        updateSQL.set("canDelete", false)
+        updateSQL.set("canDelete", false).set("updateTime", new Date())
                 .andEq("modelId", modelId)
                 .andIn("fieldId", (Object[]) attrIdArr)
                 .andEq("attributeType", AttributeType.EXTEND_ATTR.name());
