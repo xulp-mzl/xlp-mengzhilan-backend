@@ -10,7 +10,7 @@ public enum  FormInputType {
     /**
      * 密码输入框
      */
-    PASSWORD("密码"),
+    PASSWORD_TEXT("密码"),
     /**
      * 普通文本输入框
      */
@@ -19,7 +19,7 @@ public enum  FormInputType {
     /**
      * 隐藏框
      */
-    HIDDEN("隐藏框"),
+    HIDDEN_TEXT("隐藏框"),
 
     /**
      * 可清除普通文本输入框
@@ -33,20 +33,22 @@ public enum  FormInputType {
     /**
      * 邮件地址输入框
      */
-    EMAIL("邮件地址输入框", XLPVerifedUtil.EMAIL_REGEX),
+    EMAIL_TEXT("邮件地址输入框", XLPVerifedUtil.EMAIL_REGEX),
 
     /**
      * 数字输入框
      */
-    NUMBER("数字输入框", XLPVerifedUtil.REAL_NUMBER_REGEX),
+    NUMBER_TEXT("数字输入框", XLPVerifedUtil.REAL_NUMBER_REGEX),
+
     /**
      * 整数输入框
      */
-    INTEGER("整数输入框", XLPVerifedUtil.INT_REGEX),
+    INTEGER_TEXT("整数输入框", XLPVerifedUtil.INT_REGEX),
+
     /**
      * 非负整数输入框
      */
-    UNSIGNED_INTEGER("非负整数输入框", XLPVerifedUtil.UNSIGNED_INT_REGEX),
+    UNSIGNED_INTEGER_TEXT("非负整数输入框", XLPVerifedUtil.UNSIGNED_INT_REGEX),
 
     /**
      * 是否选择器
@@ -103,7 +105,7 @@ public enum  FormInputType {
     /**
      * 弹框选择
      */
-    NEW_WINDOW_SELECTION("弹框选择"),
+    FROM_NEW_WINDOW_DATA("弹框选择"),
     ;
 
     /**

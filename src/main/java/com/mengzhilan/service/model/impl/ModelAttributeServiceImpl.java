@@ -3,6 +3,7 @@ package com.mengzhilan.service.model.impl;
 import com.mengzhilan.base.service.ApplicationBaseServiceAbstract;
 import com.mengzhilan.dao.model.ModelAttributeDao;
 import com.mengzhilan.entity.model.form.ModelFormDetailConfig;
+import com.mengzhilan.enumeration.FormInputType;
 import com.mengzhilan.enumeration.attribute.AttributeType;
 import com.mengzhilan.exception.BusinessException;
 import com.mengzhilan.form.FormConfig;
@@ -87,6 +88,8 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
             modelFormDetailConfig.setId(config.getId());
             modelFormDetailConfig.setAttributeType(config.getAttributeType());
             modelFormDetailConfig.setCanDelete(config.getCanDelete());
+            FormInputType formInputType = modelFormDetailConfig.getFormInputType();
+            if (formInputType != null) modelFormDetailConfig.setRule(formInputType.getRegex());
             update(modelFormDetailConfig);
             //更新缓存中的数据
             FormFieldInfo formFieldInfo = FormConfig.findFormFieldInfo(formInfoBean,
@@ -118,6 +121,8 @@ public class ModelAttributeServiceImpl extends ApplicationBaseServiceAbstract
             modelFormDetailConfig.setAttributeType(AttributeType.EXTEND_ATTR);
             modelFormDetailConfig.setCanDelete(true);
         }
+        FormInputType formInputType = modelFormDetailConfig.getFormInputType();
+        if (formInputType != null) modelFormDetailConfig.setRule(formInputType.getRegex());
         modelFormDetailConfig.setId(null);
         save(modelFormDetailConfig);
         //更新缓存中的数据
