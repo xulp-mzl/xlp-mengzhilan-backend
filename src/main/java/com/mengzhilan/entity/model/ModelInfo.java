@@ -1,6 +1,6 @@
 package com.mengzhilan.entity.model;
 
-import com.mengzhilan.base.MZBaseEntityIdAuto;
+import com.mengzhilan.base.MZBaseEntity;
 import org.xlp.db.ddl.annotation.XLPIndex;
 import org.xlp.db.ddl.type.IndexType;
 import org.xlp.db.tableoption.annotation.XLPColumn;
@@ -16,7 +16,8 @@ import org.xlp.javabean.annotation.FieldName;
  */
 @Bean
 @XLPEntity(descriptor = "模型信息", tableName = "mz_model_info")
-public class ModelInfo extends MZBaseEntityIdAuto {
+public class ModelInfo extends MZBaseEntity {
+    private static final long serialVersionUID = 7462421299453032133L;
     /**
      * 模型id
      */
