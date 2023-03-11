@@ -3,7 +3,6 @@ package com.mengzhilan.base;
 import org.xlp.db.tableoption.annotation.XLPColumn;
 import org.xlp.db.tableoption.annotation.XLPId;
 import org.xlp.db.tableoption.xlpenum.DataType;
-import org.xlp.db.tableoption.xlpenum.PrimaryKeyType;
 import org.xlp.javabean.annotation.FieldName;
 
 import java.io.Serializable;
@@ -13,13 +12,12 @@ import java.io.Serializable;
  *
  * 基本实体抽象类，主要提供两个必须属性
  */
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntity implements Serializable, Cloneable, ICovert{
    private static final long serialVersionUID = -5746897510175841125L;
 
    @FieldName
-   @XLPId(type = PrimaryKeyType.UUID, columnName = "id", dataType = DataType.VARCHAR,
-        length = 64, isNull = false, descriptor = "主键，唯一标识")
-   private String id;
+   @XLPId(columnName = "id", descriptor = "主键，唯一标识")
+   private Serializable id;
 
     @FieldName
     @XLPColumn(columnName = "classId", dataType = DataType.VARCHAR,
@@ -31,7 +29,7 @@ public abstract class BaseEntity implements Serializable {
      *
      * @return
      */
-    public String getId() {
+    public Serializable getId() {
         return id;
     }
 
@@ -40,7 +38,7 @@ public abstract class BaseEntity implements Serializable {
      *
      * @param id
      */
-    public void setId(String id) {
+    public void setId(Serializable id) {
         this.id = id;
     }
 

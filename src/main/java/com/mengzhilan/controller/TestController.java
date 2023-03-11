@@ -21,7 +21,28 @@ public class TestController {
     @RequestMapping(value = "/test", method = RequestMethodType.GET)
     public String test(HttpServletResponse response, HttpServletRequest request,
                        @RequestParam(required = true) String id){
+        String url = request.getScheme()+ "://" + request.getServerName()
+                + ":" + request.getServerPort();
+        String contextPath = request.getContextPath();
+        if (contextPath.startsWith("/") && contextPath.length() == 1) {
+            return url + contextPath;
+        }
+        if (!contextPath.startsWith("/")) {
+            url += "/";
+        }
+        url += contextPath;
+        if (!contextPath.endsWith("/")) {
+            url += "/";
+        }
+        System.out.println(url);
         return "{\"id\":" + id + "}";
+    }
+
+    @ResponseCharset("utf-8")
+    @RequestMapping(value = "/test2", method = RequestMethodType.GET)
+    public void test2(HttpServletResponse response,  String id1) throws IOException {
+        System.out.println(response);
+        response.getWriter().write(id1+"1");
     }
 
     @ResponseCharset("utf-8")
@@ -30,7 +51,6 @@ public class TestController {
         System.out.println(response);
         response.getWriter().write(id1+"1");
     }
-
 
     @ResponseCharset("utf-8")
     @RequestMapping(value = "/test123{id}{name}", method = RequestMethodType.GET)
