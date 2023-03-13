@@ -33,6 +33,11 @@ public class MenuItem extends MZBaseEntity {
     private String path;
 
     @FieldName
+    @XLPColumn(columnName = "routerName", dataType = DataType.VARCHAR,
+            length = 20, descriptor = "菜单路由名称")
+    private String routerName;
+
+    @FieldName
     @XLPColumn(columnName = "icon_type", dataType = DataType.VARCHAR,
             length = 50, descriptor = "图标类型", maxLength = 50)
     private String iconType;
@@ -136,6 +141,14 @@ public class MenuItem extends MZBaseEntity {
         }
     }
 
+    public String getRouterName() {
+        return routerName;
+    }
+
+    public void setRouterName(String routerName) {
+        this.routerName = routerName;
+    }
+
     @Override
     public String toString() {
         return "MenuItem{" +
@@ -147,6 +160,7 @@ public class MenuItem extends MZBaseEntity {
                 ", descriptor='" + descriptor + '\'' +
                 ", weight=" + weight +
                 ", children=" + children +
+                ", routerName='" + routerName + "\'" +
                 "} " + super.toString();
     }
 }

@@ -46,23 +46,19 @@ public class MenuItemDaoImpl extends BaseDao implements MenuItemDao {
     }
 
     /**
-     * 验证路由或菜单标题是否已存在
+     * 验证菜单标题是否已存在
      *
      * @param menuItem
      * @return true： 存在，false：不存在
      */
     @Override
-    public boolean verifyPathAndTitle(MenuItem menuItem) {
+    public boolean verifyTitle(MenuItem menuItem) {
         CountSQL<MenuItem> countSQL = new CountSQL<>(MenuItem.class);
-        countSQL.group().andEq("title", XLPStringUtil.emptyTrim(menuItem.getTitle()))
-                .orEq("path", XLPStringUtil.emptyTrim(menuItem.getPath())).endGroup();
-        if (!XLPStringUtil.isEmpty(menuItem.getId())){
+        countSQL.andEq("title", XLPStringUtil.emptyTrim(menuItem.getTitle()));
+        if (!XLPStringUtil.isEmpty((String) menuItem.getId())){
             countSQL.andNotEq("id", menuItem.getId());
         }
         long count = this.count(countSQL);
-        if (count > 0){
-            return true;
-        }
-        return false;
+        return count > 0;
     }
 }

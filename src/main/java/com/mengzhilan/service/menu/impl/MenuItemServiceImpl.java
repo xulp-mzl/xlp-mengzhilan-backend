@@ -74,7 +74,7 @@ public class MenuItemServiceImpl extends ApplicationBaseServiceAbstract implemen
             // 假如没设置path为name值
             menuItem.setPath("（自动设置）" + menuItem.getTitle());
         }
-        boolean hasExists = menuItemDao.verifyPathAndTitle(menuItem);
+        boolean hasExists = menuItemDao.verifyTitle(menuItem);
         if (hasExists) return false;
         if (XLPStringUtil.isEmpty(menuItem.getParentId())){
             menuItem.setParentId(MenuItem.DEFAULT_PARENT_ID);
@@ -97,7 +97,7 @@ public class MenuItemServiceImpl extends ApplicationBaseServiceAbstract implemen
             // 假如没设置path为name值
             menuItem.setPath("（自动设置）" + menuItem.getTitle());
         }
-        boolean hasExists = menuItemDao.verifyPathAndTitle(menuItem);
+        boolean hasExists = menuItemDao.verifyTitle(menuItem);
         if (hasExists) return false;
         menuItem.setUpdateTime(new Date());
         menuItemDao.updateMenuItem(menuItem);

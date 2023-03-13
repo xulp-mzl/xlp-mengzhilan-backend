@@ -25,10 +25,10 @@ public interface MenuItemDao extends IBaseDao {
     boolean updateMenuItem(MenuItem menuItem);
 
     /**
-     * 验证路由或菜单标题是否已存在
+     * 验证菜单标题是否已存在
      *
      * @param menuItem
      * @return true： 存在，false：不存在
      */
-    boolean verifyPathAndTitle(MenuItem menuItem);
+    boolean verifyTitle(MenuItem menuItem);
 }

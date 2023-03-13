@@ -6,6 +6,7 @@ import org.xlp.db.ddl.type.IndexType;
 import org.xlp.db.tableoption.annotation.XLPColumn;
 import org.xlp.db.tableoption.annotation.XLPEntity;
 import org.xlp.db.tableoption.xlpenum.DataType;
+import org.xlp.db.tableoption.xlpenum.PrimaryKeyType;
 import org.xlp.javabean.annotation.Bean;
 import org.xlp.javabean.annotation.FieldName;
 
@@ -15,7 +16,8 @@ import org.xlp.javabean.annotation.FieldName;
  * 模型信息
  */
 @Bean
-@XLPEntity(descriptor = "模型信息", tableName = "mz_model_info")
+@XLPEntity(descriptor = "模型信息", tableName = "mz_model_info",
+        primaryKeyType = PrimaryKeyType.AUTO)
 public class ModelInfo extends MZBaseEntity {
     private static final long serialVersionUID = 7462421299453032133L;
     /**
